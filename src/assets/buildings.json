@@ -1,0 +1,31 @@
+{
+  "names": [
+    "Cursor",
+    "Hand",
+    "Rock On"
+  ],
+  "images": [
+    "assets/cursor.png",
+    "assets/hand.png",
+    "assets/hand_2.png"
+  ],
+  "costs": [
+    10,
+    100,
+    1000
+  ],
+  "tickMultipliers": [
+    0.5,
+    1,
+    10
+  ],
+  "unlocks": [
+    0,
+    1000,
+    10000
+  ],
+
+  "counts": [],
+  "enabled": [true],
+  "refs": []
+}

@@ -1,11 +1,23 @@
 import './time-clicker.scss';
+const buildings = require('./assets/buildings.json');
+
+
+buildings.names.forEach((name, index) => {
+  buildings.refs[index] = null;
+  buildings.counts[index] = 0;
+  if(!buildings.enabled.hasOwnProperty(index)) {
+    buildings.enabled[index] = false;
+  }
+});
 
 let score = 100;
+let totalScore = score + 0;
 let modifier = 'ms';
 let tickMultiplier = 0;
 let tickModifier = 'ms';
-let clickingPower = 110;
+let clickingPower = 1000;
 let clickingModifier = 'ms';
+let nextUnlock = 1;
 
 const clockRef = document.getElementById('clock');
 const scoreRef = document.getElementById('score');
@@ -18,43 +30,6 @@ const clickModRef = document.getElementById('clickModifier');
 const tabsRef = document.getElementById('tabs');
 const upgradesRef = document.getElementById('upgrades');
 
-const buildings = {
-  names: [
-    'Cursor',
-    'Hand',
-    'Rock On'
-  ],
-  refs: [
-    undefined,
-    undefined,
-    undefined
-  ],
-  enabled: [
-    true,
-    true,
-    true
-  ],
-  images: [
-    'assets/cursor.png',
-    'assets/hand.png',
-    'assets/hand_2.png'
-  ],
-  costs: [
-    10,
-    100,
-    1000
-  ],
-  counts: [
-    10,
-    0,
-    0
-  ],
-  tickMultipliers: [
-    0.5,
-    1,
-    10
-  ]
-};
 
 const updateScore = () => {
   modifierRef.innerHTML = modifier;
@@ -67,6 +42,8 @@ const updateScore = () => {
 
 clockRef.addEventListener('click', () => {
   score += clickingPower;
+  totalScore += clickingPower;
+
   updateScore();
 }, false);
 
@@ -155,8 +132,31 @@ const updateBuildings = () => {
   });
 }
 
+const checkUnlocks = () => {
+  if(nextUnlock === -1) { return; }
+
+  if(totalScore < buildings.unlocks[nextUnlock]) {
+    return;
+  }
+
+  buildings.enabled[nextUnlock] = true;
+
+  if(buildings.names.length >= (nextUnlock + 1)) {
+    nextUnlock += 1;
+  } else {
+    nextUnlock = -1;
+  }
+
+  updateBuildings();
+}
+
 const runTick = () => {
-  score += tickMultiplier / 2;
+  const addValue = tickMultiplier / 2;
+  
+  score += addValue;
+  totalScore += addValue;
+
+  checkUnlocks();
   updateScore(); 
 }
 
