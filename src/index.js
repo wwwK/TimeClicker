@@ -15,7 +15,7 @@ let totalScore = score + 0;
 let modifier = 'ms';
 let tickMultiplier = 0;
 let tickModifier = 'ms';
-let clickingPower = 1000;
+let clickingPower = 10000;
 let clickingModifier = 'ms';
 let nextUnlock = 1;
 
@@ -30,6 +30,34 @@ const clickModRef = document.getElementById('clickModifier');
 const tabsRef = document.getElementById('tabs');
 const upgradesRef = document.getElementById('upgrades');
 
+// https://en.wikipedia.org/wiki/Unit_of_time
+
+/*
+  femtosecond   1
+  picosecond    1 000
+  nanosecond    1 000,000
+  microsecond   1 000 000 000
+  millisecond   1 000 000 000 000
+  second        1 000 000 000 000 000
+  minute        60 000 000 000 000 000
+  hour          3 600 000 000 000 000 000
+  day           86 400 000 000 000 000 000
+  week          604 800 000 000 000 000 000
+  semester      10 886 400 000 000 000 000 000
+  common year   31 536 000 000 000 000 000 000
+  decade        315 360 000 000 000 000 000 000
+  century       3 153 600 000000 000 000 000 000
+  millennium    31 536 000 000 000 000 000 000 000
+  terasecond    999 691 200 000000 000 000 000 000
+  petasecond    999 691 200 000000 000 000 000 000 000
+  exasecond     999 691 200 000000 000 000 000 000 000 000
+  zettasecond   999 691 200 000000 000 000 000 000 000 000 000
+  yottasecond   999 691 200 000000 000 000 000 000 000 000 000 000
+*/
+
+const test = 999691200000000000000000000000000000000;
+
+console.log(test * 200000000);
 
 const updateScore = () => {
   modifierRef.innerHTML = modifier;
