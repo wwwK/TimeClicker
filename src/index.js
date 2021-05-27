@@ -1,5 +1,14 @@
 import './time-clicker.scss';
+
+import buildingManager from './modules/buildings.module';
+import { domElements  } from './modules/dom-elements.module';
+
 const buildings = require('./assets/buildings.json');
+
+
+console.log(buildingManager);
+
+
 
 
 buildings.names.forEach((name, index) => {
@@ -19,8 +28,6 @@ let clickingPower = 10000;
 let clickingModifier = 'ms';
 let nextUnlock = 1;
 
-const clockRef = document.getElementById('clock');
-const scoreRef = document.getElementById('score');
 const modifierRef = document.getElementById('scoreModifier');
 const buildingsRef = document.getElementById('buildings');
 const earningRef = document.getElementById('tickEarning');
@@ -59,14 +66,14 @@ console.log(((aeon * 2.25) + 5022255) / aeon);
 
 const updateScore = () => {
   modifierRef.innerHTML = modifier;
-  scoreRef.innerHTML = score;
+  domElements.score.innerHTML = score;
   earningRef.innerHTML = tickMultiplier;
   tickModifierRef.innerHTML = tickModifier;
   clickPwrRef.innerHTML = clickingPower;
   clickModRef.innerHTML = clickingModifier;
 }
 
-clockRef.addEventListener('click', () => {
+domElements.clock.addEventListener('click', () => {
   score += clickingPower;
   totalScore += clickingPower;
 
@@ -107,7 +114,7 @@ const buyBuilding = (index) => {
 
   buildings.refs[index].querySelector('.cost').innerHTML = `${buildings.costs[index]} ms`;
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
-  scoreRef.innerHTML = score;
+  domElements.score.innerHTML = score;
   
   recalculateTickMultiplier();
   updateScore();
