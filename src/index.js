@@ -28,15 +28,6 @@ let clickingPower = 10000;
 let clickingModifier = 'ms';
 let nextUnlock = 1;
 
-const modifierRef = document.getElementById('scoreModifier');
-const buildingsRef = document.getElementById('buildings');
-const earningRef = document.getElementById('tickEarning');
-const tickModifierRef = document.getElementById('tickModifier');
-const clickPwrRef = document.getElementById('clickPower');
-const clickModRef = document.getElementById('clickModifier');
-const tabsRef = document.getElementById('tabs');
-const upgradesRef = document.getElementById('upgrades');
-
 // https://en.wikipedia.org/wiki/Unit_of_time
 // https://en.wikipedia.org/wiki/Unit_of_time#/media/File:Units_of_Time_in_tabular_form.png
 
@@ -65,12 +56,12 @@ const aeon = 31557600000000000000000000000000;
 console.log(((aeon * 2.25) + 5022255) / aeon);
 
 const updateScore = () => {
-  modifierRef.innerHTML = modifier;
+  domElements.scoreMod.innerHTML = modifier;
   domElements.score.innerHTML = score;
-  earningRef.innerHTML = tickMultiplier;
-  tickModifierRef.innerHTML = tickModifier;
-  clickPwrRef.innerHTML = clickingPower;
-  clickModRef.innerHTML = clickingModifier;
+  domElements.earning.innerHTML = tickMultiplier;
+  domElements.earningMod.innerHTML = tickModifier;
+  domElements.click.innerHTML = clickingPower;
+  domElements.clickMod.innerHTML = clickingModifier;
 }
 
 domElements.clock.addEventListener('click', () => {
@@ -80,20 +71,20 @@ domElements.clock.addEventListener('click', () => {
   updateScore();
 }, false);
 
-tabsRef.querySelector('.buildings').addEventListener('click', () => {
-  buildingsRef.style.display = 'block';
-  upgradesRef.style.display = 'none';
+domElements.menuTabs.querySelector('.buildings').addEventListener('click', () => {
+  domElements.buildingsWrapper.style.display = 'block';
+  domElements.upgradesWrapper.style.display = 'none';
   
-  tabsRef.querySelector('.buildings').setAttribute('class', 'buildings active');
-  tabsRef.querySelector('.upgrades').setAttribute('class', 'upgrades');
+  domElements.menuTabs.querySelector('.buildings').setAttribute('class', 'buildings active');
+  domElements.menuTabs.querySelector('.upgrades').setAttribute('class', 'upgrades');
 });
 
-tabsRef.querySelector('.upgrades').addEventListener('click', () => {
-  buildingsRef.style.display = 'none';
-  upgradesRef.style.display = 'block';
+domElements.menuTabs.querySelector('.upgrades').addEventListener('click', () => {
+  domElements.buildingsWrapper.style.display = 'none';
+  domElements.upgradesWrapper.style.display = 'block';
 
-  tabsRef.querySelector('.buildings').setAttribute('class', 'buildings');
-  tabsRef.querySelector('.upgrades').setAttribute('class', 'upgrades active');
+  domElements.menuTabs.querySelector('.buildings').setAttribute('class', 'buildings');
+  domElements.menuTabs.querySelector('.upgrades').setAttribute('class', 'upgrades active');
 });
 
 const recalculateTickMultiplier = () => {
@@ -153,7 +144,7 @@ const spawnBuilding = (index) => {
   wrapper.appendChild(countDiv);
 
   wrapper.onclick = () => buyBuilding(index);
-  buildingsRef.appendChild(wrapper);
+  domElements.buildingsWrapper.appendChild(wrapper);
   buildings.refs[index] = wrapper;
 }
 

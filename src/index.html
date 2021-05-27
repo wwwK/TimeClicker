@@ -12,28 +12,29 @@
         <tr>
           <td colspan="2">
             <div class="score">
-              You have <span id="tc_score">-</span> <span id="scoreModifier">-</span>
+              You have <span id="tc_score">-</span> <span id="tc_score_mod">-</span>
             </div>
             
             <div class="multiplier">
-              Earning <span id="tickEarning">-</span> <span id="tickModifier">-</span> / sec (<span id="clickPower">-</span> <span id="clickModifier">-</span> / click)
+              Earning <span id="tc_earning">-</span> <span id="tc_earning_mod">-</span> / sec 
+              (<span id="tc_click">-</span> <span id="tc_click_mod">-</span> / click)
             </div>
           </td>
         </tr>
         <tr>
           <td>
             <div class="clickerContainer">
-              <img src="assets/clock.png" height="256" class="clock" id="clock" onclick="game.click()">
+              <img src="assets/clock.png" height="256" class="clock" id="clock">
             </div>
           </td>
           <td class="side-menu">
-            <ul class="tabs" id="tabs">
+            <ul class="tabs" id="tc_menu_tabs">
               <li><a class="buildings active">Buildings</a></li>
               <li><a class="upgrades">Upgrades</a></li>
             </ul>
             
-            <div id="buildings"></div>
-            <div id="upgrades">Hello World</div>
+            <div id="tc_buildings"></div>
+            <div id="tc_upgrades">Hello World</div>
           </td>
         </tr>
       </table>
