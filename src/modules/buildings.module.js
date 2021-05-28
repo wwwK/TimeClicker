@@ -1,4 +1,5 @@
 import { domElements } from './dom-elements.module';
+import gameState from './game-state.module';
 const buildings = require('./../assets/buildings.json');
 
 // ensure that all the buildings are valid
@@ -48,17 +49,17 @@ const _spawnBuilding = (index) => {
 }
 
 const _buyBuilding = (index) => {
-  if(score < buildings.costs[index]) {
+  if(gameState.score < buildings.costs[index]) {
     return;
   }
 
-  score -= buildings.costs[index];
+  gameState.score -= buildings.costs[index];
   buildings.costs[index] = Math.ceil(buildings.costs[index] * 1.7);
   buildings.counts[index]++;
 
   buildings.refs[index].querySelector('.cost').innerHTML = `${buildings.costs[index]} ms`;
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
-  domElements.score.innerHTML = score;
+  domElements.score.innerHTML = gameState.score;
   
   recalculateTickMultiplier();
   updateScore();

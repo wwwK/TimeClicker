@@ -2,9 +2,9 @@ import './time-clicker.scss';
 
 import buildings from './modules/buildings.module';
 import { domElements  } from './modules/dom-elements.module';
+import gameState from './modules/game-state.module';
 
-let score = 100;
-let sessionScore = score + 0;
+let sessionScore = gameState.score + 0;
 let modifier = 'ms';
 let tickMultiplier = buildings.calculateTickMultiplier();
 let tickModifier = 'ms';
@@ -39,7 +39,7 @@ const aeon = 31557600000000000000000000000000;
 
 const updateScore = () => {
   domElements.scoreMod.innerHTML = modifier;
-  domElements.score.innerHTML = score;
+  domElements.score.innerHTML = gameState.score;
   domElements.earning.innerHTML = tickMultiplier;
   domElements.earningMod.innerHTML = tickModifier;
   domElements.click.innerHTML = clickingPower;
@@ -47,7 +47,7 @@ const updateScore = () => {
 }
 
 domElements.clock.addEventListener('click', () => {
-  score += clickingPower;
+  gameState.score += clickingPower;
   sessionScore += clickingPower;
 
   updateScore();
@@ -72,7 +72,7 @@ domElements.menuTabs.querySelector('.upgrades').addEventListener('click', () => 
 const runTick = () => {
   const addValue = tickMultiplier / 2;
   
-  score += addValue;
+  gameState.score += addValue;
   sessionScore += addValue;
 
   buildings.checkUnlocks(sessionScore);
