@@ -3,11 +3,7 @@ import './time-clicker.scss';
 import buildings from './modules/buildings.module';
 import { domElements  } from './modules/dom-elements.module';
 import { state } from './modules/state.module';
-
-let modifier = 'ms';
-let tickMultiplier = buildings.calculateTickMultiplier();
-let tickModifier = 'ms';
-let clickingModifier = 'ms';
+import { gameUi } from './modules/ui.module';
 
 // https://en.wikipedia.org/wiki/Unit_of_time
 // https://en.wikipedia.org/wiki/Unit_of_time#/media/File:Units_of_Time_in_tabular_form.png
@@ -35,15 +31,6 @@ let clickingModifier = 'ms';
 const aeon = 31557600000000000000000000000000;
 // console.log(((aeon * 2.25) + 5022255) / aeon);
 
-const updateScore = () => {
-  domElements.scoreMod.innerHTML = modifier;
-  domElements.score.innerHTML = state.game.score;
-  domElements.earning.innerHTML = tickMultiplier;
-  domElements.earningMod.innerHTML = tickModifier;
-  domElements.click.innerHTML = state.game.clickingPower;
-  domElements.clickMod.innerHTML = clickingModifier;
-}
-
 domElements.clock.addEventListener('click', () => {
   state.handleClick();
 
@@ -66,15 +53,11 @@ domElements.menuTabs.querySelector('.upgrades').addEventListener('click', () => 
   domElements.menuTabs.querySelector('.upgrades').setAttribute('class', 'upgrades active');
 });
 
-const runTick = () => {
-  const addValue = tickMultiplier / 2;
-  
-  state.game.score += addValue;
-  state.game.sessionScore += addValue;
-
-  buildings.checkUnlocks(state.game.sessionScore);
-  updateScore(); 
+const _runTick = () => {
+  state.tick();
+  buildings.tick();
+  gameUi.updateScore();
 }
 
-runTick();
-setInterval(() => runTick(), 500);
+_runTick();
+setInterval(() => _runTick(), 500);

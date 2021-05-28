@@ -11,6 +11,10 @@ buildings.names.forEach((name, index) => {
   }
 });
 
+// Define the exported API
+let nextUnlock = 1;
+const api = {};
+
 const _spawnBuilding = (index) => {
   const wrapper = document.createElement('div');
   wrapper.setAttribute('class', 'building');
@@ -60,23 +64,13 @@ const _buyBuilding = (index) => {
   buildings.refs[index].querySelector('.cost').innerHTML = `${buildings.costs[index]} ms`;
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
   domElements.score.innerHTML = state.game.score;
+
+  state.game.earning = api.calculateTickMultiplier();
   
-  recalculateTickMultiplier();
   updateScore();
 }
 
-let nextUnlock = 1;
-const api = {};
-
-api.updateBuildings = () => {
-  buildings.names.forEach((name, i) => {
-    if(!buildings.refs[i] && buildings.enabled[i]) {
-      _spawnBuilding(i);
-    }
-  });
-}
-
-api.checkUnlocks = (sessionScore) => {
+const _checkUnlocks = (sessionScore) => {
   if(nextUnlock === -1) { return; }
 
   if(sessionScore < buildings.unlocks[nextUnlock]) {
@@ -94,6 +88,14 @@ api.checkUnlocks = (sessionScore) => {
   api.updateBuildings();
 }
 
+api.updateBuildings = () => {
+  buildings.names.forEach((name, i) => {
+    if(!buildings.refs[i] && buildings.enabled[i]) {
+      _spawnBuilding(i);
+    }
+  });
+}
+
 api.calculateTickMultiplier = () => {
   return buildings.names.reduce((multiplier, name, index) => {
     multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
@@ -101,5 +103,11 @@ api.calculateTickMultiplier = () => {
   }, 0);
 }
 
+api.tick = () => {
+  _checkUnlocks(state.game.sessionScore);
+}
+
 api.updateBuildings();
+state.game.tickMultiplier = api.calculateTickMultiplier();
+
 export default api;
