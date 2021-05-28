@@ -1,3 +1,5 @@
+const _menuTabs = document.getElementById('tc_menu_tabs');
+
 export const domElements = {
   clock: document.getElementById('clock'),
   score: document.getElementById('tc_score'),
@@ -8,5 +10,11 @@ export const domElements = {
   clickMod: document.getElementById('tc_click_mod'),
   menuTabs: document.getElementById('tc_menu_tabs'),
   buildingsWrapper: document.getElementById('tc_buildings'),
-  upgradesWrapper: document.getElementById('tc_upgrades')
+  upgradesWrapper: document.getElementById('tc_upgrades'),
+  menuTabBuildings: _menuTabs.querySelector('.buildings'),
+  menuTabUpgrades: _menuTabs.querySelector('.upgrades'),
+  unitName: document.getElementById('unit_name'),
+  unitAbbreviation: document.getElementById('unit_abbr'),
+  unitDescription: document.getElementById('unit_description'),
+  unitMoreInfo: document.getElementById('unit_more_info')
 };

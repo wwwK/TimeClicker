@@ -1,12 +1,12 @@
 const gameState = {
   score: 0,
-  scoreModifier: 'ms',
+  scoreModifier: 'fs',
   clickCount: 0,
   sessionScore: 0,
   clickingPower: 1000,
-  clickingPowerModifier: 'ms',
+  clickingPowerModifier: 'fs',
   earning: 0,
-  earningModifier: 'ms'
+  earningModifier: 'fs'
 };
 
 const _handleClick = () => {
