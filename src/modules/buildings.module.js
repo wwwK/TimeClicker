@@ -1,5 +1,5 @@
 import { domElements } from './dom-elements.module';
-import state from './state.module';
+import { state } from './state.module';
 const buildings = require('./../assets/buildings.json');
 
 // ensure that all the buildings are valid

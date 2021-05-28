@@ -2,13 +2,11 @@ import './time-clicker.scss';
 
 import buildings from './modules/buildings.module';
 import { domElements  } from './modules/dom-elements.module';
-import state from './modules/state.module';
+import { state } from './modules/state.module';
 
-let sessionScore = state.game.score + 0;
 let modifier = 'ms';
 let tickMultiplier = buildings.calculateTickMultiplier();
 let tickModifier = 'ms';
-let clickingPower = 10000;
 let clickingModifier = 'ms';
 
 // https://en.wikipedia.org/wiki/Unit_of_time
@@ -42,13 +40,12 @@ const updateScore = () => {
   domElements.score.innerHTML = state.game.score;
   domElements.earning.innerHTML = tickMultiplier;
   domElements.earningMod.innerHTML = tickModifier;
-  domElements.click.innerHTML = clickingPower;
+  domElements.click.innerHTML = state.game.clickingPower;
   domElements.clickMod.innerHTML = clickingModifier;
 }
 
 domElements.clock.addEventListener('click', () => {
-  state.game.score += clickingPower;
-  sessionScore += clickingPower;
+  state.handleClick();
 
   updateScore();
 }, false);
@@ -73,9 +70,9 @@ const runTick = () => {
   const addValue = tickMultiplier / 2;
   
   state.game.score += addValue;
-  sessionScore += addValue;
+  state.game.sessionScore += addValue;
 
-  buildings.checkUnlocks(sessionScore);
+  buildings.checkUnlocks(state.game.sessionScore);
   updateScore(); 
 }
 
