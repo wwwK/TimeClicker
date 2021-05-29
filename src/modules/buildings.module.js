@@ -1,6 +1,7 @@
 import { domElements } from './dom-elements.module';
 import { gameNumbers } from './numbers.module';
 import { state } from './state.module';
+import { toast } from './toast.module';
 import { gameUi } from './ui.module';
 const buildings = require('./../assets/buildings.json');
 
@@ -69,6 +70,11 @@ const _spawnBuilding = (index) => {
 const _updateUiBuildingGeneratorValue = (index) => {
   const target = buildings.refs[index].querySelector('.cost-reward .reward');
   target.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+
+  toast.show({
+    title: 'Building Upgraded',
+    body: 'Something here'
+  });
 }
 
 const _handleBuildingCountMilestones = (index) => {
