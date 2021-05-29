@@ -7,15 +7,13 @@ const buildings = require('./../assets/buildings.json');
 // ensure that all the buildings are valid
 buildings.names.forEach((name, index) => {
   buildings.refs[index] = null;
-  buildings.counts[index] = 0;
+  buildings.counts[index] = buildings.counts.hasOwnProperty(index) ? buildings.counts[index] : 0;
   buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
 
   if(!buildings.enabled.hasOwnProperty(index)) {
     buildings.enabled[index] = false;
   }
 });
-
-console.log(buildings);
 
 // Define the exported API
 let nextUnlock = 1;
@@ -68,9 +66,39 @@ const _spawnBuilding = (index) => {
   buildings.refs[index] = wrapper;
 }
 
+const _updateUiBuildingGeneratorValue = (index) => {
+  const target = buildings.refs[index].querySelector('.cost-reward .reward');
+  target.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+}
+
 const _handleBuildingCountMilestones = (index) => {
   if(buildings.counts[index] === 5) {
-    console.log('5 eh');
+    buildings.tickMultipliers[index] *= 1.5;
+    _updateUiBuildingGeneratorValue(index);
+    return;
+  }
+
+  if(buildings.counts[index] % 100 === 0) {
+    buildings.tickMultipliers[index] *= 2;
+    _updateUiBuildingGeneratorValue(index);
+    return;
+  }
+
+  if(buildings.counts[index] % 50 === 0) {
+    buildings.tickMultipliers[index] *= 1.5;
+    _updateUiBuildingGeneratorValue(index);
+    return;
+  }
+
+  if(buildings.counts[index] % 25 === 0) {
+    buildings.tickMultipliers[index] *= 1.35;
+    _updateUiBuildingGeneratorValue(index);
+    return;
+  }
+
+  if(buildings.counts[index] % 10 === 0) {
+    buildings.tickMultipliers[index] *= 1.25;
+    _updateUiBuildingGeneratorValue(index);
   }
 }
 

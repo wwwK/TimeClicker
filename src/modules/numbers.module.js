@@ -73,7 +73,8 @@ const _formatNumber = (value, append) => {
   append = append ?? '';
 
   if(value < 1) {
-    return `${value} ${numberInfo.abbreviations[0]}${append}`;
+    let rounded = Math.round((value + Number.EPSILON) * 100) / 100;
+    return `${rounded} ${numberInfo.abbreviations[0]}${append}`;
   }
 
   const index = _findClosestMultiplier(value);
