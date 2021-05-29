@@ -1,4 +1,5 @@
 import { domElements } from './dom-elements.module';
+import { gameNumbers } from './numbers.module';
 import { state } from './state.module';
 import { gameUi } from './ui.module';
 const buildings = require('./../assets/buildings.json');
@@ -7,7 +8,7 @@ const buildings = require('./../assets/buildings.json');
 buildings.names.forEach((name, index) => {
   buildings.refs[index] = null;
   buildings.counts[index] = 0;
-  buildings.tickMultiplierStrings[index] = 'Hello';
+  buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
 
   if(!buildings.enabled.hasOwnProperty(index)) {
     buildings.enabled[index] = false;
