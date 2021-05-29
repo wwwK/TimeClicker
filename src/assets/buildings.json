@@ -27,5 +27,6 @@
 
   "counts": [],
   "enabled": [true],
-  "refs": []
+  "refs": [],
+  "tickMultiplierStrings": []
 }

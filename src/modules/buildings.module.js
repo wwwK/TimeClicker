@@ -7,14 +7,17 @@ const buildings = require('./../assets/buildings.json');
 buildings.names.forEach((name, index) => {
   buildings.refs[index] = null;
   buildings.counts[index] = 0;
+  buildings.tickMultiplierStrings[index] = 'Hello';
+
   if(!buildings.enabled.hasOwnProperty(index)) {
     buildings.enabled[index] = false;
   }
 });
 
+console.log(buildings);
+
 // Define the exported API
 let nextUnlock = 1;
-const api = {};
 
 const _spawnBuilding = (index) => {
   const wrapper = document.createElement('div');
@@ -53,20 +56,28 @@ const _spawnBuilding = (index) => {
   buildings.refs[index] = wrapper;
 }
 
+const _handleBuildingCountMilestones = (index) => {
+  if(buildings.counts[index] === 5) {
+    console.log('5 eh');
+  }
+}
+
 const _buyBuilding = (index) => {
   if(state.game.score < buildings.costs[index]) {
     return;
   }
 
   state.game.score -= buildings.costs[index];
-  buildings.costs[index] = Math.ceil(buildings.costs[index] * 1.7);
+  buildings.costs[index] = Math.ceil(buildings.costs[index] * 1.25);
   buildings.counts[index]++;
+
+  _handleBuildingCountMilestones(index);
 
   buildings.refs[index].querySelector('.cost').innerHTML = `${buildings.costs[index]} ms`;
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
   domElements.score.innerHTML = state.game.score;
 
-  state.game.earning = api.calculateTickMultiplier();
+  state.game.earning = _calculateTickMultiplier();
   gameUi.updateScore();
 }
 
@@ -88,6 +99,17 @@ const _checkUnlocks = (sessionScore) => {
   api.updateBuildings();
 }
 
+const _calculateTickMultiplier = () => {
+  return buildings.names.reduce((multiplier, name, index) => {
+    multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
+    return multiplier;
+  }, 0);
+}
+
+
+// Define the public API
+const api = {};
+
 api.updateBuildings = () => {
   buildings.names.forEach((name, i) => {
     if(!buildings.refs[i] && buildings.enabled[i]) {
@@ -96,18 +118,11 @@ api.updateBuildings = () => {
   });
 }
 
-api.calculateTickMultiplier = () => {
-  return buildings.names.reduce((multiplier, name, index) => {
-    multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
-    return multiplier;
-  }, 0);
-}
-
 api.tick = () => {
   _checkUnlocks(state.game.sessionScore);
 }
 
 api.updateBuildings();
-state.game.tickMultiplier = api.calculateTickMultiplier();
+state.game.tickMultiplier = _calculateTickMultiplier();
 
 export default api;

@@ -25,6 +25,10 @@ domElements.unitMoreInfo.addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
+const _formatNumber = (value) => {
+  console.log(value);
+}
+
 export const gameNumbers = {
   info: {
     abbreviation: numberInfo.abbreviations[currentIndex],
@@ -32,5 +36,6 @@ export const gameNumbers = {
     multiplier: numberInfo.multipliers[currentIndex],
     url: numberInfo.urls[currentIndex],
     description: numberInfo.descriptions[currentIndex]
-  }
+  },
+  formatNumber: _formatNumber
 };

@@ -47,3 +47,6 @@ gameUi.updateCurrentUnit();
 
 _runTick();
 setInterval(() => _runTick(), 500);
+
+
+gameNumbers.formatNumber(1);
