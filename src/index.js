@@ -29,9 +29,6 @@ import { gameNumbers } from './modules/numbers.module';
   aeon          31 557 600 000 000 000 000 000 000 000 000
 */
 
-const aeon = 31557600000000000000000000000000;
-// console.log(((aeon * 2.25) + 5022255) / aeon);
-
 domElements.clock.addEventListener('click', () => {
   state.handleClick();
   gameUi.updateScore();

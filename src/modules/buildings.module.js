@@ -1,5 +1,6 @@
 import { domElements } from './dom-elements.module';
 import { state } from './state.module';
+import { gameUi } from './ui.module';
 const buildings = require('./../assets/buildings.json');
 
 // ensure that all the buildings are valid
@@ -66,8 +67,7 @@ const _buyBuilding = (index) => {
   domElements.score.innerHTML = state.game.score;
 
   state.game.earning = api.calculateTickMultiplier();
-  
-  updateScore();
+  gameUi.updateScore();
 }
 
 const _checkUnlocks = (sessionScore) => {
