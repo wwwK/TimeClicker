@@ -65,13 +65,15 @@ const _findClosestMultiplier = (value) => {
   return -1;
 }
 
-const _formatNumber = (value) => {
+const _formatNumber = (value, append) => {
   if(typeof value !== 'number') { 
     return 'NaN';
   }
 
+  append = append ?? '';
+
   if(value < 1) {
-    return `${value} ${numberInfo.abbreviations[0]}`;
+    return `${value} ${numberInfo.abbreviations[0]}${append}`;
   }
 
   const index = _findClosestMultiplier(value);
@@ -82,7 +84,7 @@ const _formatNumber = (value) => {
 
   let formatted = value / numberInfo.multipliers[index];
   let rounded = Math.round((formatted + Number.EPSILON) * 100) / 100;
-  return `${rounded} ${numberInfo.abbreviations[index]}`;
+  return `${rounded} ${numberInfo.abbreviations[index]}${append}`;
 }
 
 export const gameNumbers = {

@@ -40,10 +40,21 @@ const _spawnBuilding = (index) => {
   nameDiv.innerHTML = buildings.names[index];
   infoDiv.appendChild(nameDiv);
 
-  const costDiv = document.createElement('div');
-  costDiv.setAttribute('class', 'cost');
-  costDiv.innerHTML = `${buildings.costs[index]} ms`;
-  infoDiv.appendChild(costDiv);
+  const costRewardDiv = document.createElement('div');
+  costRewardDiv.setAttribute('class', 'cost-reward');
+  const costSpan = document.createElement('span');
+  costSpan.setAttribute('class', 'cost');
+  costSpan.innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
+  costRewardDiv.appendChild(costSpan);
+  const spacerSpan = document.createElement('span');
+  spacerSpan.setAttribute('class', 'spacer');
+  spacerSpan.innerHTML = ' | ';
+  costRewardDiv.appendChild(spacerSpan);
+  const rewardSpan = document.createElement('span');
+  rewardSpan.setAttribute('class', 'reward');
+  rewardSpan.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+  costRewardDiv.appendChild(rewardSpan);
+  infoDiv.appendChild(costRewardDiv);
 
   wrapper.appendChild(infoDiv);
 
@@ -74,7 +85,7 @@ const _buyBuilding = (index) => {
 
   _handleBuildingCountMilestones(index);
 
-  buildings.refs[index].querySelector('.cost').innerHTML = `${buildings.costs[index]} ms`;
+  buildings.refs[index].querySelector('.cost').innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
   domElements.score.innerHTML = state.game.score;
 
