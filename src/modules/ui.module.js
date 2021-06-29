@@ -4,10 +4,11 @@ import { state } from "./state.module";
 
 const _updateScore = () => {
   let roundedScore = Math.round((state.game.score + Number.EPSILON) * 100) / 100;
+  let roundedEarning = Math.round((state.game.earning + Number.EPSILON) * 100) / 100;
 
   domElements.scoreMod.innerHTML = state.game.scoreModifier;
   domElements.score.innerHTML = roundedScore;
-  domElements.earning.innerHTML = state.game.earning;
+  domElements.earning.innerHTML = roundedEarning;
   domElements.earningMod.innerHTML = state.game.earningModifier;
   domElements.click.innerHTML = state.game.clickingPower;
   domElements.clickMod.innerHTML = state.game.clickingPowerModifier;

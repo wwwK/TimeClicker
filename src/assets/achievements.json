@@ -1,0 +1,20 @@
+{
+    "cursor": [
+        {
+            "count": 5,
+            "name": "Something cool",
+            "message": "Production increased by 100% ({epsOld} -> {epsNew} {epsModifier})",
+            "type": "multiplier",
+            "value": 2
+        }
+    ],
+    "hand": [
+        {
+            "count": 10,
+            "name": "No touchy",
+            "message": "I'll pay you to stop doing that!",
+            "type": "multiplier",
+            "value": 3
+        }
+    ]
+}

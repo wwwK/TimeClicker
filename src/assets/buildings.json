@@ -1,4 +1,9 @@
 {
+  "ids": [
+    "cursor",
+    "hand",
+    "rock_on"
+  ],
   "names": [
     "Cursor",
     "Hand",
@@ -24,11 +29,12 @@
     1000,
     10000
   ],
-
   "counts": [],
   "enabled": [true],
   "refs": [],
   "classes": [],
   "canAfford": [],
-  "tickMultiplierStrings": []
+  "tickMultiplierStrings": [],
+  "achievements": [],
+  "nextAchievement": []
 }

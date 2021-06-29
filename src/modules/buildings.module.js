@@ -3,7 +3,9 @@ import { gameNumbers } from './numbers.module';
 import { state } from './state.module';
 import { toast } from './toast.module';
 import { gameUi } from './ui.module';
+
 const buildings = require('./../assets/buildings.json');
+const achievements = require('./../assets/achievements.json');
 
 // ensure that all the buildings are valid
 buildings.names.forEach((name, index) => {
@@ -12,6 +14,12 @@ buildings.names.forEach((name, index) => {
   buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
   buildings.classes[index] = ['building'];
   buildings.canAfford[index] = false;
+  buildings.achievements[index] = [];
+  buildings.nextAchievement[index] = 0;
+  
+  (achievements[buildings.ids[index]] ?? []).forEach(() => {
+    buildings.achievements[index].push(false);
+  });
 
   if(!buildings.enabled.hasOwnProperty(index)) {
     buildings.enabled[index] = false;
@@ -72,41 +80,93 @@ const _spawnBuilding = (index) => {
 const _updateUiBuildingGeneratorValue = (index) => {
   const target = buildings.refs[index].querySelector('.cost-reward .reward');
   target.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+}
+
+const _applyBuildingSpecificAchievement = (index, achievement) => {
+  if(achievement.type !== 'multiplier') { return; }
+
+  let value = parseFloat(achievement.hasOwnProperty('value') ? `${achievement.value}` : '1.5');
+  const epsOld = buildings.tickMultipliers[index];
+
+  if(isNaN(value)) { value = 1.5; }
+  buildings.tickMultipliers[index] *= value;
+  _updateUiBuildingGeneratorValue(index);
+
+  // Handle message replacements
+  let formattedMessage = `${achievement.message}`
+    .replace('{epsOld}', epsOld)
+    .replace('{epsNew}', buildings.tickMultipliers[index])
+    .replace('{epsModifier}', state.game.earningModifier);
 
   toast.show({
-    title: 'Building Upgraded',
-    body: 'Something here'
+    title: achievement.name,
+    body: formattedMessage
+  });
+}
+
+const _handleBuildingSpecificAchievements = (index) => {
+  if(buildings.nextAchievement[index] === -1) { return; }
+  const buildingId = buildings.ids[index];
+  const buildingAchievements = achievements[buildingId] ?? [];
+
+  if(buildingAchievements.length === 0) {
+    buildings.nextAchievement[index] = -1;
+    return;
+  }
+
+  const achievementIdx = buildings.nextAchievement[index];
+  const nextAchievement = buildingAchievements[achievementIdx];
+  if(buildings.counts[index] < nextAchievement.count) { return; }
+
+  buildings.achievements[index][achievementIdx] = true;
+  buildings.nextAchievement[index] += 1;
+
+  if(!achievements[buildingId].hasOwnProperty(buildings.nextAchievement[index])) {
+    buildings.nextAchievement[index] = -1;
+  }
+
+  _applyBuildingSpecificAchievement(index, nextAchievement);
+}
+
+const _applyMilestoneMultiplier = (index, multiplier) => {
+  const original = buildings.tickMultipliers[index];
+  const buildingName = buildings.names[index];
+  
+  buildings.tickMultipliers[index] *= multiplier;
+  let change = buildings.tickMultipliers[index] - original;
+  let roundedChange = Math.round((change + Number.EPSILON) * 100) / 100;
+
+  _updateUiBuildingGeneratorValue(index);
+  toast.show({
+    title: `${buildingName} upgraded`,
+    body: `Generating additional ${roundedChange} ${state.game.earningModifier} / sec`
   });
 }
 
 const _handleBuildingCountMilestones = (index) => {
   if(buildings.counts[index] === 5) {
-    buildings.tickMultipliers[index] *= 1.5;
-    _updateUiBuildingGeneratorValue(index);
+    _applyMilestoneMultiplier(index, 1.05);
     return;
   }
 
   if(buildings.counts[index] % 100 === 0) {
-    buildings.tickMultipliers[index] *= 2;
-    _updateUiBuildingGeneratorValue(index);
+    _applyMilestoneMultiplier(index, 2);
     return;
   }
 
   if(buildings.counts[index] % 50 === 0) {
-    buildings.tickMultipliers[index] *= 1.5;
-    _updateUiBuildingGeneratorValue(index);
+    _applyMilestoneMultiplier(index, 1.5);
     return;
   }
 
   if(buildings.counts[index] % 25 === 0) {
-    buildings.tickMultipliers[index] *= 1.35;
-    _updateUiBuildingGeneratorValue(index);
+    _applyMilestoneMultiplier(index, 1.25);
     return;
   }
 
   if(buildings.counts[index] % 10 === 0) {
-    buildings.tickMultipliers[index] *= 1.25;
-    _updateUiBuildingGeneratorValue(index);
+    _applyMilestoneMultiplier(index, 1.1);
+    return;
   }
 }
 
@@ -119,6 +179,7 @@ const _buyBuilding = (index) => {
   buildings.counts[index]++;
 
   _handleBuildingCountMilestones(index);
+  _handleBuildingSpecificAchievements(index);
 
   buildings.refs[index].querySelector('.cost').innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
