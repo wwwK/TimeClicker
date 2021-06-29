@@ -6,8 +6,12 @@ const gameState = {
   clickingPower: 1000,
   clickingPowerModifier: 'fs',
   earning: 0,
-  earningModifier: 'fs'
+  earningModifier: 'fs',
+  targetTicksPerSec: 4,
+  gameLoopSleepMs: 0
 };
+
+gameState.gameLoopSleepMs = 1000 / gameState.targetTicksPerSec;
 
 const _handleClick = () => {
   gameState.score += gameState.clickingPower;
@@ -15,7 +19,7 @@ const _handleClick = () => {
 }
 
 const _tick = () => {
-  const addValue = gameState.earning / 2;
+  const addValue = gameState.earning / gameState.targetTicksPerSec;
   
   state.game.score += addValue;
   state.game.sessionScore += addValue;

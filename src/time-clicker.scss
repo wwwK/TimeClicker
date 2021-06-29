@@ -89,14 +89,21 @@ body {
               border: 1px solid #000;
               padding: 3px;
               border-radius: 6px;
-              background-color: rgba(142, 167, 132, 0.884);
+              background-color: rgba(154, 154, 154, 0.88);
               display: flex;
               flex-direction: row;
               flex-wrap: nowrap;
               justify-content: flex-start;
               width: 250px;
-              cursor: pointer;
+              cursor: not-allowed;
               margin-bottom: 2px;
+              opacity: 0.5;
+
+              &.can-buy {
+                opacity: 1;
+                background-color: #aad2ab;
+                cursor: pointer;
+              }
   
               .icon {
                 border: 1px solid #000;

@@ -10,6 +10,8 @@ buildings.names.forEach((name, index) => {
   buildings.refs[index] = null;
   buildings.counts[index] = buildings.counts.hasOwnProperty(index) ? buildings.counts[index] : 0;
   buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
+  buildings.classes[index] = ['building'];
+  buildings.canAfford[index] = false;
 
   if(!buildings.enabled.hasOwnProperty(index)) {
     buildings.enabled[index] = false;
@@ -21,7 +23,7 @@ let nextUnlock = 1;
 
 const _spawnBuilding = (index) => {
   const wrapper = document.createElement('div');
-  wrapper.setAttribute('class', 'building');
+  wrapper.classList.add(...buildings.classes[index]);
 
   const iconDiv = document.createElement('div');
   iconDiv.setAttribute('class', 'icon');
@@ -109,9 +111,8 @@ const _handleBuildingCountMilestones = (index) => {
 }
 
 const _buyBuilding = (index) => {
-  if(state.game.score < buildings.costs[index]) {
-    return;
-  }
+  // Ensure that we can afford it
+  if(state.game.score < buildings.costs[index]) { return; }
 
   state.game.score -= buildings.costs[index];
   buildings.costs[index] = Math.ceil(buildings.costs[index] * 1.25);
@@ -125,6 +126,7 @@ const _buyBuilding = (index) => {
 
   state.game.earning = _calculateTickMultiplier();
   gameUi.updateScore();
+  _updateCanBuy();
 }
 
 const _checkUnlocks = (sessionScore) => {
@@ -152,6 +154,28 @@ const _calculateTickMultiplier = () => {
   }, 0);
 }
 
+const _updateCanBuy = () => {
+  const score = state.game.score;
+  buildings.refs.forEach((el, index) => {
+    if(!el) { return; }
+
+    // Do we need to change this status?
+    const canAfford = buildings.costs[index] <= score;
+    if(buildings.canAfford[index] === canAfford) { return; }
+
+    // Sync the status
+    buildings.canAfford[index] = canAfford;
+    const hasBuyClass = buildings.refs[index].classList.contains('can-buy');
+
+    // Ensure that the correct class is applied
+    if(canAfford) {
+      if(!hasBuyClass) { buildings.refs[index].classList.add('can-buy'); }
+    } else {
+      if(hasBuyClass) { buildings.refs[index].classList.remove('can-buy'); }
+    }
+  });
+}
+
 
 // Define the public API
 const api = {};
@@ -166,6 +190,7 @@ api.updateBuildings = () => {
 
 api.tick = () => {
   _checkUnlocks(state.game.sessionScore);
+  _updateCanBuy();
 }
 
 api.updateBuildings();

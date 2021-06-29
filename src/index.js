@@ -26,4 +26,4 @@ const _runTick = () => {
 gameUi.updateCurrentUnit();
 
 _runTick();
-setInterval(() => _runTick(), 500);
+setInterval(() => _runTick(), state.game.gameLoopSleepMs);
