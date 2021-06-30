@@ -6,43 +6,31 @@ const gameState = {
   clickingPower: 1000,
   clickingPowerModifier: 'fs',
   earning: 0,
-  earningModifier: 'fs',
+  earningModifier: 'fs'
+};
+
+const gameConfig = {
+  targetTicksPerSec: 4,
   gameLoopSleepMs: 0
 };
 
-const targetTicksPerSec = 4;
-let nextSaveDate = new Date((new Date()).getTime() + 1000);
-let saveCounter = 0;
-
-gameState.gameLoopSleepMs = 1000 / targetTicksPerSec;
+gameConfig.gameLoopSleepMs = 1000 / gameConfig.targetTicksPerSec;
 
 const _handleClick = () => {
   gameState.score += gameState.clickingPower;
   gameState.sessionScore += gameState.clickingPower;
 }
 
-const _saveLocal = () => {
-  nextSaveDate = new Date((new Date()).getTime() + 30000);
-
-  console.log('saving...', gameState);
-}
-
 const _tick = () => {
-  const addValue = gameState.earning / targetTicksPerSec;
+  const addValue = gameState.earning / gameConfig.targetTicksPerSec;
   
   state.game.score += addValue;
   state.game.sessionScore += addValue;
-
-  if(saveCounter % targetTicksPerSec === 0) {
-    if(new Date() > nextSaveDate) { _saveLocal(); }
-    saveCounter = 0;
-  }
-
-  saveCounter += 1;
 }
 
 export const state = {
   game: gameState,
+  config: gameConfig,
   handleClick: _handleClick,
   tick: _tick
 };
