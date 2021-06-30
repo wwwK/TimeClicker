@@ -254,6 +254,10 @@ api.tick = () => {
   _updateCanBuy();
 }
 
+api.getBuildings = () => {
+  return buildings;
+}
+
 api.updateBuildings();
 state.game.tickMultiplier = _calculateTickMultiplier();
 
