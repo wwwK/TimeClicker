@@ -1,7 +1,7 @@
 import { domElements } from "./dom-elements.module";
 import { state } from "./state.module";
 import { storage } from "./storage.module";
-import buildings from './buildings.module';
+import buildings from './buildings';
 import ui from "./ui.module";
 
 const _tick = () => {
