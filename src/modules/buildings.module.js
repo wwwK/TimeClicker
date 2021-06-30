@@ -4,6 +4,7 @@ import { state } from './state.module';
 import { toast } from './toast.module';
 import ui from './ui.module';
 
+const api = {};
 const buildings = state.buildings;
 const achievements = state.achievements;
 
@@ -166,7 +167,7 @@ const _buyBuilding = (index) => {
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
   domElements.score.innerHTML = state.game.score;
 
-  state.game.earning = _calculateTickMultiplier();
+  state.game.earning = api.calculateTickMultiplier();
   ui.updateScore();
   _updateCanBuy();
 }
@@ -187,13 +188,6 @@ const _checkUnlocks = (sessionScore) => {
   }
 
   api.updateBuildings();
-}
-
-const _calculateTickMultiplier = () => {
-  return buildings.names.reduce((multiplier, name, index) => {
-    multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
-    return multiplier;
-  }, 0);
 }
 
 const _updateCanBuy = () => {
@@ -220,8 +214,6 @@ const _updateCanBuy = () => {
 
 
 // Define the public API
-const api = {};
-
 api.updateBuildings = () => {
   buildings.names.forEach((name, i) => {
     if(!buildings.refs[i] && buildings.enabled[i]) {
@@ -230,16 +222,16 @@ api.updateBuildings = () => {
   });
 }
 
+api.calculateTickMultiplier = () => {
+  return buildings.names.reduce((multiplier, name, index) => {
+    multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
+    return multiplier;
+  }, 0);
+}
+
 api.tick = () => {
   _checkUnlocks(state.game.sessionScore);
   _updateCanBuy();
 }
-
-api.getBuildings = () => {
-  return buildings;
-}
-
-api.updateBuildings();
-state.game.tickMultiplier = _calculateTickMultiplier();
 
 export default api;

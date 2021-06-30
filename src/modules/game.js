@@ -19,7 +19,11 @@ domElements.clock.addEventListener('click', () => {
 domElements.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
 domElements.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
 
+// Bootstrap the game
 ui.updateCurrentUnit();
+buildings.updateBuildings();
+state.game.tickMultiplier = buildings.calculateTickMultiplier();
+
 _tick();
 
 export default {
