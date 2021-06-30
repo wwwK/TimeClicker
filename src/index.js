@@ -4,6 +4,7 @@ import buildings from './modules/buildings.module';
 import { domElements  } from './modules/dom-elements.module';
 import { state } from './modules/state.module';
 import { gameUi } from './modules/ui.module';
+import { storage } from './modules/storage.module';
 
 // https://en.wikipedia.org/wiki/Unit_of_time
 // https://en.wikipedia.org/wiki/Unit_of_time#/media/File:Units_of_Time_in_tabular_form.png
@@ -18,6 +19,7 @@ domElements.menuTabBuildings.addEventListener('click', gameUi.showBuildingsMenu)
 domElements.menuTabUpgrades.addEventListener('click', gameUi.showUpgradesMenu);
 
 const _runTick = () => {
+  storage.tick();
   state.tick();
   buildings.tick();
   gameUi.updateScore();

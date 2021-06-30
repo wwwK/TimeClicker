@@ -138,7 +138,7 @@ const _applyMilestoneMultiplier = (index, multiplier) => {
 
   _updateUiBuildingGeneratorValue(index);
   toast.show({
-    title: `${buildingName} upgraded`,
+    title: `"${buildingName}" upgraded`,
     body: `Generating additional ${roundedChange} ${state.game.earningModifier} / sec`
   });
 }
