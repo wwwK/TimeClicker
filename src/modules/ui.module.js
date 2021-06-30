@@ -36,9 +36,14 @@ const _updateCurrentUnit = () => {
   domElements.unitDescription.innerHTML = gameNumbers.info.description;
 }
 
+const _tick = () => {
+  _updateScore();
+}
+
 export const gameUi = {
-  updateScore: _updateScore,
   showBuildingsMenu: _showBuildingsMenu,
   showUpgradesMenu: _showUpgradesMenu,
-  updateCurrentUnit: _updateCurrentUnit
+  updateCurrentUnit: _updateCurrentUnit,
+  updateScore: _updateScore,
+  tick: _tick
 };
