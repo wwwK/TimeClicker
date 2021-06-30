@@ -2,7 +2,7 @@ import { domElements } from './dom-elements.module';
 import { gameNumbers } from './numbers.module';
 import { state } from './state.module';
 import { toast } from './toast.module';
-import ui from './ui.module';
+import ui from './ui';
 
 const api = {};
 const buildings = state.buildings;

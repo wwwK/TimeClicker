@@ -2,7 +2,7 @@ import { domElements } from "./dom-elements.module";
 import { state } from "./state.module";
 import { storage } from "./storage.module";
 import buildings from './buildings';
-import ui from "./ui.module";
+import ui from "./ui";
 
 const _tick = () => {
     storage.tick();
