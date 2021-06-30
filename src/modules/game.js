@@ -2,24 +2,24 @@ import { domElements } from "./dom-elements.module";
 import { state } from "./state.module";
 import { storage } from "./storage.module";
 import buildings from './buildings.module';
-import { gameUi } from "./ui.module";
+import ui from "./ui.module";
 
 const _tick = () => {
     storage.tick();
     state.tick();
     buildings.tick();
-    gameUi.tick();
+    ui.tick();
 }
 
 domElements.clock.addEventListener('click', () => {
     state.handleClick();
-    gameUi.updateScore();
+    ui.updateScore();
 }, true);
 
-domElements.menuTabBuildings.addEventListener('click', gameUi.showBuildingsMenu);
-domElements.menuTabUpgrades.addEventListener('click', gameUi.showUpgradesMenu);
+domElements.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
+domElements.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
 
-gameUi.updateCurrentUnit();
+ui.updateCurrentUnit();
 _tick();
 
 export default {

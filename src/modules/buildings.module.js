@@ -2,7 +2,7 @@ import { domElements } from './dom-elements.module';
 import { gameNumbers } from './numbers.module';
 import { state } from './state.module';
 import { toast } from './toast.module';
-import { gameUi } from './ui.module';
+import ui from './ui.module';
 
 const buildings = state.buildings;
 const achievements = state.achievements;
@@ -167,7 +167,7 @@ const _buyBuilding = (index) => {
   domElements.score.innerHTML = state.game.score;
 
   state.game.earning = _calculateTickMultiplier();
-  gameUi.updateScore();
+  ui.updateScore();
   _updateCanBuy();
 }
 

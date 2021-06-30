@@ -2,7 +2,33 @@ import { domElements } from "./dom-elements.module";
 import { gameNumbers } from "./numbers.module";
 import { state } from "./state.module";
 
-const _updateScore = () => {
+
+// External API
+const api = {};
+
+api.showBuildingsMenu = () => {
+  domElements.buildingsWrapper.style.display = 'block';
+  domElements.upgradesWrapper.style.display = 'none';
+  
+  domElements.menuTabBuildings.setAttribute('class', 'buildings active');
+  domElements.menuTabUpgrades.setAttribute('class', 'upgrades');
+}
+
+api.showUpgradesMenu = () => {
+  domElements.buildingsWrapper.style.display = 'none';
+  domElements.upgradesWrapper.style.display = 'block';
+
+  domElements.menuTabBuildings.setAttribute('class', 'buildings');
+  domElements.menuTabUpgrades.setAttribute('class', 'upgrades active');
+}
+
+api.updateCurrentUnit = () => {
+  domElements.unitName.innerHTML = gameNumbers.info.name;
+  domElements.unitAbbreviation.innerHTML = gameNumbers.info.abbreviation;
+  domElements.unitDescription.innerHTML = gameNumbers.info.description;
+}
+
+api.updateScore = () => {
   let roundedScore = Math.round((state.game.score + Number.EPSILON) * 100) / 100;
   let roundedEarning = Math.round((state.game.earning + Number.EPSILON) * 100) / 100;
 
@@ -14,36 +40,8 @@ const _updateScore = () => {
   domElements.clickMod.innerHTML = state.game.clickingPowerModifier;
 }
 
-const _showBuildingsMenu = () => {
-  domElements.buildingsWrapper.style.display = 'block';
-  domElements.upgradesWrapper.style.display = 'none';
-  
-  domElements.menuTabBuildings.setAttribute('class', 'buildings active');
-  domElements.menuTabUpgrades.setAttribute('class', 'upgrades');
+api.tick = () => {
+  api.updateScore();
 }
 
-const _showUpgradesMenu = () => {
-  domElements.buildingsWrapper.style.display = 'none';
-  domElements.upgradesWrapper.style.display = 'block';
-
-  domElements.menuTabBuildings.setAttribute('class', 'buildings');
-  domElements.menuTabUpgrades.setAttribute('class', 'upgrades active');
-}
-
-const _updateCurrentUnit = () => {
-  domElements.unitName.innerHTML = gameNumbers.info.name;
-  domElements.unitAbbreviation.innerHTML = gameNumbers.info.abbreviation;
-  domElements.unitDescription.innerHTML = gameNumbers.info.description;
-}
-
-const _tick = () => {
-  _updateScore();
-}
-
-export const gameUi = {
-  showBuildingsMenu: _showBuildingsMenu,
-  showUpgradesMenu: _showUpgradesMenu,
-  updateCurrentUnit: _updateCurrentUnit,
-  updateScore: _updateScore,
-  tick: _tick
-};
+export default api;
