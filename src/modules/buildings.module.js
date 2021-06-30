@@ -4,27 +4,8 @@ import { state } from './state.module';
 import { toast } from './toast.module';
 import { gameUi } from './ui.module';
 
-const buildings = require('./../assets/buildings.json');
-const achievements = require('./../assets/achievements.json');
-
-// ensure that all the buildings are valid
-buildings.names.forEach((name, index) => {
-  buildings.refs[index] = null;
-  buildings.counts[index] = buildings.counts.hasOwnProperty(index) ? buildings.counts[index] : 0;
-  buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
-  buildings.classes[index] = ['building'];
-  buildings.canAfford[index] = false;
-  buildings.achievements[index] = [];
-  buildings.nextAchievement[index] = 0;
-  
-  (achievements[buildings.ids[index]] ?? []).forEach(() => {
-    buildings.achievements[index].push(false);
-  });
-
-  if(!buildings.enabled.hasOwnProperty(index)) {
-    buildings.enabled[index] = false;
-  }
-});
+const buildings = state.buildings;
+const achievements = state.achievements;
 
 // Define the exported API
 let nextUnlock = 1;
