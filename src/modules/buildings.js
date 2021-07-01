@@ -3,7 +3,9 @@ import numbers from './numbers.module';
 import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';
+import logger from './logger';
 
+logger.traceModuleLoad('buildings');
 const api = {};
 const buildings = state.buildings;
 const achievements = state.achievements;

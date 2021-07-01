@@ -1,4 +1,7 @@
 import gameDom from "./dom";
+import logger from './logger';
+
+logger.traceModuleLoad('toast');
 
 let toastId = 1;
 let toasts = {};

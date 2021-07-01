@@ -1,4 +1,7 @@
 import numbers from './numbers.module';
+import logger from './logger';
+
+logger.traceModuleLoad('game-state');
 
 const session = {
   score: 0,

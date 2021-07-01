@@ -4,6 +4,9 @@ import storage from "./storage";
 import buildings from './buildings';
 import numbers from './numbers.module';
 import ui from "./ui";
+import logger from './logger';
+
+logger.traceModuleLoad('game');
 
 
 /* **********************************************************************

@@ -1,3 +1,6 @@
+import logger from './logger';
+
+logger.traceModuleLoad('numbers');
 const numberInfo = require('../assets/_numbers.json');
 let currentIndex = 0;
 const api = {};
