@@ -1,5 +1,5 @@
 import gameDom from "./dom";
-import { gameNumbers } from "./numbers.module";
+import numbers from "./numbers.module";
 import state from "./game-state";
 
 
@@ -25,9 +25,9 @@ api.showUpgradesMenu = () => {
 }
 
 api.updateCurrentUnit = () => {
-  gameDom.unitName.innerHTML = gameNumbers.info.name;
-  gameDom.unitAbbreviation.innerHTML = gameNumbers.info.abbreviation;
-  gameDom.unitDescription.innerHTML = gameNumbers.info.description;
+  gameDom.unitName.innerHTML = numbers.info.name;
+  gameDom.unitAbbreviation.innerHTML = numbers.info.abbreviation;
+  gameDom.unitDescription.innerHTML = numbers.info.description;
 }
 
 api.updateScore = () => {

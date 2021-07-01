@@ -1,0 +1,27 @@
+{
+  "abbreviations": [
+    "fs",
+    "ps",
+    "nsec"
+  ],
+  "names": [
+    "femtosecond",
+    "picosecond",
+    "nanosecond"
+  ],
+  "multipliers": [
+    1,
+    1000,
+    1000000
+  ],
+  "urls": [
+    "https://en.wikipedia.org/wiki/Femtosecond",
+    "https://en.wikipedia.org/wiki/Picosecond",
+    "https://en.wikipedia.org/wiki/Nanosecond"
+  ],
+  "descriptions": [
+    "A femtosecond is the SI unit of time equal to one quadrillionth, or one millionth of one billionth, of a second",
+    "A picosecond is an SI unit of time equal to one trillionth of a second",
+    "A nanosecond (ns) is an SI unit of time equal to one billionth of a second"
+  ]
+}

@@ -2,6 +2,7 @@ import gameDom from "./dom";
 import state from "./game-state";
 import storage from "./storage";
 import buildings from './buildings';
+import numbers from './numbers.module';
 import ui from "./ui";
 
 
@@ -25,6 +26,10 @@ gameDom.clock.addEventListener('click', () => {
     state.handleClick();
     ui.updateScore();
 }, true);
+
+gameDom.unitMoreInfo.addEventListener('click', () => {
+    window.open(numbers.getMoreInfoUrl(), '_blank');
+});
 
 gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
 gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);

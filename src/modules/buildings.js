@@ -1,5 +1,5 @@
 import gameDom from './dom';
-import { gameNumbers } from './numbers.module';
+import numbers from './numbers.module';
 import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';
@@ -33,7 +33,7 @@ const _spawnBuilding = (index) => {
   costRewardDiv.setAttribute('class', 'cost-reward');
   const costSpan = document.createElement('span');
   costSpan.setAttribute('class', 'cost');
-  costSpan.innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
+  costSpan.innerHTML = numbers.format(buildings.costs[index]);
   costRewardDiv.appendChild(costSpan);
   const spacerSpan = document.createElement('span');
   spacerSpan.setAttribute('class', 'spacer');
@@ -41,7 +41,7 @@ const _spawnBuilding = (index) => {
   costRewardDiv.appendChild(spacerSpan);
   const rewardSpan = document.createElement('span');
   rewardSpan.setAttribute('class', 'reward');
-  rewardSpan.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+  rewardSpan.innerHTML = numbers.format(buildings.tickMultipliers[index], '/s');
   costRewardDiv.appendChild(rewardSpan);
   infoDiv.appendChild(costRewardDiv);
 
@@ -59,7 +59,7 @@ const _spawnBuilding = (index) => {
 
 const _updateUiBuildingGeneratorValue = (index) => {
   const target = buildings.refs[index].querySelector('.cost-reward .reward');
-  target.innerHTML = gameNumbers.formatNumber(buildings.tickMultipliers[index], '/s');
+  target.innerHTML = numbers.format(buildings.tickMultipliers[index], '/s');
 }
 
 const _applyBuildingSpecificAchievement = (index, achievement) => {
@@ -161,7 +161,7 @@ const _buyBuilding = (index) => {
   _handleBuildingCountMilestones(index);
   _handleBuildingSpecificAchievements(index);
 
-  buildings.refs[index].querySelector('.cost').innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
+  buildings.refs[index].querySelector('.cost').innerHTML = numbers.format(buildings.costs[index]);
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
   gameDom.score.innerHTML = state.session.score;
 

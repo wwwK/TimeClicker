@@ -1,4 +1,4 @@
-import { gameNumbers } from './numbers.module';
+import numbers from './numbers.module';
 
 const session = {
   score: 0,
@@ -21,13 +21,13 @@ const config = {
 /* **********************************************************************
 * Load buildings and achievements
 ********************************************************************** */
-const buildings = require('../assets/buildings.json');
-const achievements = require('../assets/achievements.json');
+const buildings = require('../assets/_buildings.json');
+const achievements = require('../assets/_achievements.json');
 
 buildings.names.forEach((_name, index) => {
   buildings.refs[index] = null;
   buildings.counts[index] = buildings.counts.hasOwnProperty(index) ? buildings.counts[index] : 0;
-  buildings.tickMultiplierStrings[index] = gameNumbers.formatNumber(buildings.tickMultipliers[index]);
+  buildings.tickMultiplierStrings[index] = numbers.format(buildings.tickMultipliers[index]);
   buildings.classes[index] = ['building'];
   buildings.canAfford[index] = false;
   buildings.achievements[index] = [];
@@ -51,7 +51,7 @@ const api = {
   achievements: achievements,
   session: session,
   config: config
-};
+}
 
 api.handleClick = () => {
   session.score += session.clickingPower;
