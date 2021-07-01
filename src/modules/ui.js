@@ -1,9 +1,9 @@
 import gameDom from "./dom";
 import numbers from "./numbers.module";
 import state from "./game-state";
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('ui');
+const logger = loggerFactory.getInstance('ui');
 
 
 /* **********************************************************************

@@ -4,9 +4,9 @@ import storage from "./storage";
 import buildings from './buildings';
 import numbers from './numbers.module';
 import ui from "./ui";
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('game');
+const logger = loggerFactory.getInstance('game');
 
 
 /* **********************************************************************

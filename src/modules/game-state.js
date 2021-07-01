@@ -1,7 +1,7 @@
 import numbers from './numbers.module';
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('game-state');
+const logger = loggerFactory.getInstance('game-state');
 
 const session = {
   score: 0,
@@ -27,7 +27,8 @@ const config = {
 const buildings = require('../assets/_buildings.json');
 const achievements = require('../assets/_achievements.json');
 
-buildings.names.forEach((_name, index) => {
+buildings.names.forEach((name, index) => {
+  logger.traceMethod('processBuilding', `called for "${name}"`);
   buildings.refs[index] = null;
   buildings.counts[index] = buildings.counts.hasOwnProperty(index) ? buildings.counts[index] : 0;
   buildings.tickMultiplierStrings[index] = numbers.format(buildings.tickMultipliers[index]);

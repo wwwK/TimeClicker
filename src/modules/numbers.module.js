@@ -1,6 +1,6 @@
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('numbers');
+const logger = loggerFactory.getInstance('numbers');
 const numberInfo = require('../assets/_numbers.json');
 let currentIndex = 0;
 const api = {};
@@ -29,7 +29,7 @@ const _findClosestMultiplier = (value) => {
 ********************************************************************** */
 api.info = currentInfo;
 
-api.format = () => {
+api.format = (value, append) => {
   if(typeof value !== 'number') { 
     return 'NaN';
   }

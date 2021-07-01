@@ -1,7 +1,7 @@
 import state from "./game-state";
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('storage');
+const logger = loggerFactory.getInstance('storage');
 
 const api = {};
 let saveCounter = 0;

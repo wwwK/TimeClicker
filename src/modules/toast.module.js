@@ -1,7 +1,7 @@
 import gameDom from "./dom";
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('toast');
+const logger = loggerFactory.getInstance('toast');
 
 let toastId = 1;
 let toasts = {};

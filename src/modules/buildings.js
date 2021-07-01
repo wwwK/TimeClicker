@@ -3,15 +3,18 @@ import numbers from './numbers.module';
 import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';
-import logger from './logger';
+import { loggerFactory } from './logger';
 
-logger.traceModuleLoad('buildings');
+const logger = loggerFactory.getInstance('buildings');
 const api = {};
 const buildings = state.buildings;
 const achievements = state.achievements;
 let nextUnlock = 1;
 
 const _spawnBuilding = (index) => {
+  const buildingName = buildings.names[index];
+  logger.traceMethod('_spawnBuilding', `called for "${buildingName}"`);
+
   const wrapper = document.createElement('div');
   wrapper.classList.add(...buildings.classes[index]);
 
@@ -216,6 +219,8 @@ const _updateCanBuy = () => {
 * Define an external API
 ********************************************************************** */
 api.updateBuildings = () => {
+  logger.traceMethod('updateBuildings');
+
   buildings.names.forEach((name, i) => {
     if(!buildings.refs[i] && buildings.enabled[i]) {
       _spawnBuilding(i);
