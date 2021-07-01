@@ -1,6 +1,6 @@
 import './time-clicker.scss';
 
-import { state } from './modules/state.module';
+import state from './modules/game-state';
 import game from './modules/game';
 
 // https://en.wikipedia.org/wiki/Unit_of_time

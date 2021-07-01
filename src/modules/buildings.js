@@ -1,14 +1,12 @@
 import { domElements } from './dom-elements.module';
 import { gameNumbers } from './numbers.module';
-import { state } from './state.module';
+import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';
 
 const api = {};
 const buildings = state.buildings;
 const achievements = state.achievements;
-
-// Define the exported API
 let nextUnlock = 1;
 
 const _spawnBuilding = (index) => {
@@ -78,7 +76,7 @@ const _applyBuildingSpecificAchievement = (index, achievement) => {
   let formattedMessage = `${achievement.message}`
     .replace('{epsOld}', epsOld)
     .replace('{epsNew}', buildings.tickMultipliers[index])
-    .replace('{epsModifier}', state.game.earningModifier);
+    .replace('{epsModifier}', state.session.earningModifier);
 
   toast.show({
     title: achievement.name,
@@ -121,7 +119,7 @@ const _applyMilestoneMultiplier = (index, multiplier) => {
   _updateUiBuildingGeneratorValue(index);
   toast.show({
     title: `"${buildingName}" upgraded`,
-    body: `Generating additional ${roundedChange} ${state.game.earningModifier} / sec`
+    body: `Generating additional ${roundedChange} ${state.session.earningModifier} / sec`
   });
 }
 
@@ -154,9 +152,9 @@ const _handleBuildingCountMilestones = (index) => {
 
 const _buyBuilding = (index) => {
   // Ensure that we can afford it
-  if(state.game.score < buildings.costs[index]) { return; }
+  if(state.session.score < buildings.costs[index]) { return; }
 
-  state.game.score -= buildings.costs[index];
+  state.session.score -= buildings.costs[index];
   buildings.costs[index] = Math.ceil(buildings.costs[index] * 1.25);
   buildings.counts[index]++;
 
@@ -165,9 +163,9 @@ const _buyBuilding = (index) => {
 
   buildings.refs[index].querySelector('.cost').innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
-  domElements.score.innerHTML = state.game.score;
+  domElements.score.innerHTML = state.session.score;
 
-  state.game.earning = api.calculateTickMultiplier();
+  state.session.earning = api.calculateTickMultiplier();
   ui.updateScore();
   _updateCanBuy();
 }
@@ -191,12 +189,11 @@ const _checkUnlocks = (sessionScore) => {
 }
 
 const _updateCanBuy = () => {
-  const score = state.game.score;
   buildings.refs.forEach((el, index) => {
     if(!el) { return; }
 
     // Do we need to change this status?
-    const canAfford = buildings.costs[index] <= score;
+    const canAfford = buildings.costs[index] <= state.session.score;
     if(buildings.canAfford[index] === canAfford) { return; }
 
     // Sync the status
@@ -213,7 +210,9 @@ const _updateCanBuy = () => {
 }
 
 
-// Define the public API
+/* **********************************************************************
+* Define an external API
+********************************************************************** */
 api.updateBuildings = () => {
   buildings.names.forEach((name, i) => {
     if(!buildings.refs[i] && buildings.enabled[i]) {
@@ -230,7 +229,7 @@ api.calculateTickMultiplier = () => {
 }
 
 api.tick = () => {
-  _checkUnlocks(state.game.sessionScore);
+  _checkUnlocks(state.session.score);
   _updateCanBuy();
 }
 

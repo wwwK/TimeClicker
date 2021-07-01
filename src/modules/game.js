@@ -1,16 +1,26 @@
 import { domElements } from "./dom-elements.module";
-import { state } from "./state.module";
-import { storage } from "./storage.module";
+import state from "./game-state";
+import storage from "./storage";
 import buildings from './buildings';
 import ui from "./ui";
 
-const _tick = () => {
+
+/* **********************************************************************
+* Define an external API
+********************************************************************** */
+const api = {};
+
+api.tick = () => {
     storage.tick();
     state.tick();
     buildings.tick();
     ui.tick();
 }
 
+
+/* **********************************************************************
+* Bind all DOM event listeners
+********************************************************************** */
 domElements.clock.addEventListener('click', () => {
     state.handleClick();
     ui.updateScore();
@@ -19,14 +29,13 @@ domElements.clock.addEventListener('click', () => {
 domElements.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
 domElements.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
 
-// Bootstrap the game
+
+/* **********************************************************************
+* Bootstrap and return the external API
+********************************************************************** */
 ui.updateCurrentUnit();
 buildings.updateBuildings();
-state.game.tickMultiplier = buildings.calculateTickMultiplier();
+state.session.tickMultiplier = buildings.calculateTickMultiplier();
+api.tick();
 
-_tick();
-
-export default {
-    domElements: domElements,
-    tick: _tick
-};
+export default api;

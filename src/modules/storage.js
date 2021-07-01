@@ -1,5 +1,6 @@
-import { state } from "./state.module";
+import state from "./game-state";
 
+const api = {};
 let saveCounter = 0;
 let nextSaveDate = new Date((new Date()).getTime() + 1000);
 const targetTicksPerSec = state.config.targetTicksPerSec;
@@ -10,7 +11,9 @@ const _saveLocal = () => {
     console.log('saving...', state);
 }
 
-const _tick = () => {
+
+// Public API
+api.tick = () => {
     console.log('tick');
 
     if(saveCounter % targetTicksPerSec === 0) {
@@ -21,6 +24,4 @@ const _tick = () => {
     saveCounter += 1;
 }
 
-export const storage = {
-    tick: _tick
-};
+export default api;

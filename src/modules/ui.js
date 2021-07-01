@@ -1,9 +1,11 @@
 import { domElements } from "./dom-elements.module";
 import { gameNumbers } from "./numbers.module";
-import { state } from "./state.module";
+import state from "./game-state";
 
 
-// External API
+/* **********************************************************************
+* Define an external API
+********************************************************************** */
 const api = {};
 
 api.showBuildingsMenu = () => {
@@ -29,15 +31,15 @@ api.updateCurrentUnit = () => {
 }
 
 api.updateScore = () => {
-  let roundedScore = Math.round((state.game.score + Number.EPSILON) * 100) / 100;
-  let roundedEarning = Math.round((state.game.earning + Number.EPSILON) * 100) / 100;
+  let roundedScore = Math.round((state.session.score + Number.EPSILON) * 100) / 100;
+  let roundedEarning = Math.round((state.session.earning + Number.EPSILON) * 100) / 100;
 
-  domElements.scoreMod.innerHTML = state.game.scoreModifier;
+  domElements.scoreMod.innerHTML = state.session.scoreModifier;
   domElements.score.innerHTML = roundedScore;
   domElements.earning.innerHTML = roundedEarning;
-  domElements.earningMod.innerHTML = state.game.earningModifier;
-  domElements.click.innerHTML = state.game.clickingPower;
-  domElements.clickMod.innerHTML = state.game.clickingPowerModifier;
+  domElements.earningMod.innerHTML = state.session.earningModifier;
+  domElements.click.innerHTML = state.session.clickingPower;
+  domElements.clickMod.innerHTML = state.session.clickingPowerModifier;
 }
 
 api.tick = () => {
