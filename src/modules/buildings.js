@@ -1,4 +1,4 @@
-import { domElements } from './dom-elements.module';
+import gameDom from './dom';
 import { gameNumbers } from './numbers.module';
 import state from './game-state';
 import { toast } from './toast.module';
@@ -53,7 +53,7 @@ const _spawnBuilding = (index) => {
   wrapper.appendChild(countDiv);
 
   wrapper.onclick = () => _buyBuilding(index);
-  domElements.buildingsWrapper.appendChild(wrapper);
+  gameDom.buildingsWrapper.appendChild(wrapper);
   buildings.refs[index] = wrapper;
 }
 
@@ -163,7 +163,7 @@ const _buyBuilding = (index) => {
 
   buildings.refs[index].querySelector('.cost').innerHTML = gameNumbers.formatNumber(buildings.costs[index]);
   buildings.refs[index].querySelector('.count').innerHTML = buildings.counts[index];
-  domElements.score.innerHTML = state.session.score;
+  gameDom.score.innerHTML = state.session.score;
 
   state.session.earning = api.calculateTickMultiplier();
   ui.updateScore();

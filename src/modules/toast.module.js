@@ -1,4 +1,4 @@
-import { domElements } from "./dom-elements.module";
+import gameDom from "./dom";
 
 let toastId = 1;
 let toasts = {};
@@ -28,7 +28,7 @@ const _toast = (titleOrOptions, body, timeout) => {
   _body.innerHTML = body;
   _toast.appendChild(_body);
 
-  domElements.toaster.appendChild(_toast);
+  gameDom.toaster.appendChild(_toast);
   toasts[currentToastId] = {
     timeout: setTimeout(() => { _clearToast(currentToastId); }, _safeTimeout),
     ref: _toast

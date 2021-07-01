@@ -1,4 +1,4 @@
-import { domElements } from "./dom-elements.module";
+import gameDom from "./dom";
 import state from "./game-state";
 import storage from "./storage";
 import buildings from './buildings';
@@ -21,13 +21,13 @@ api.tick = () => {
 /* **********************************************************************
 * Bind all DOM event listeners
 ********************************************************************** */
-domElements.clock.addEventListener('click', () => {
+gameDom.clock.addEventListener('click', () => {
     state.handleClick();
     ui.updateScore();
 }, true);
 
-domElements.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
-domElements.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
+gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
+gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
 
 
 /* **********************************************************************

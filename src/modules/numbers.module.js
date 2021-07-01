@@ -1,4 +1,4 @@
-import { domElements } from "./dom-elements.module";
+import gameDom from "./dom";
 
 let currentIndex = 0;
 
@@ -50,7 +50,7 @@ const numberInfo = {
   aeon          31 557 600 000 000 000 000 000 000 000 000
 */
 
-domElements.unitMoreInfo.addEventListener('click', () => {
+gameDom.unitMoreInfo.addEventListener('click', () => {
   const url = numberInfo.urls[currentIndex];
   window.open(url, '_blank');
 });

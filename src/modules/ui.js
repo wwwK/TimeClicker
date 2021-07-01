@@ -1,4 +1,4 @@
-import { domElements } from "./dom-elements.module";
+import gameDom from "./dom";
 import { gameNumbers } from "./numbers.module";
 import state from "./game-state";
 
@@ -9,37 +9,37 @@ import state from "./game-state";
 const api = {};
 
 api.showBuildingsMenu = () => {
-  domElements.buildingsWrapper.style.display = 'block';
-  domElements.upgradesWrapper.style.display = 'none';
+  gameDom.buildingsWrapper.style.display = 'block';
+  gameDom.upgradesWrapper.style.display = 'none';
   
-  domElements.menuTabBuildings.setAttribute('class', 'buildings active');
-  domElements.menuTabUpgrades.setAttribute('class', 'upgrades');
+  gameDom.menuTabBuildings.setAttribute('class', 'buildings active');
+  gameDom.menuTabUpgrades.setAttribute('class', 'upgrades');
 }
 
 api.showUpgradesMenu = () => {
-  domElements.buildingsWrapper.style.display = 'none';
-  domElements.upgradesWrapper.style.display = 'block';
+  gameDom.buildingsWrapper.style.display = 'none';
+  gameDom.upgradesWrapper.style.display = 'block';
 
-  domElements.menuTabBuildings.setAttribute('class', 'buildings');
-  domElements.menuTabUpgrades.setAttribute('class', 'upgrades active');
+  gameDom.menuTabBuildings.setAttribute('class', 'buildings');
+  gameDom.menuTabUpgrades.setAttribute('class', 'upgrades active');
 }
 
 api.updateCurrentUnit = () => {
-  domElements.unitName.innerHTML = gameNumbers.info.name;
-  domElements.unitAbbreviation.innerHTML = gameNumbers.info.abbreviation;
-  domElements.unitDescription.innerHTML = gameNumbers.info.description;
+  gameDom.unitName.innerHTML = gameNumbers.info.name;
+  gameDom.unitAbbreviation.innerHTML = gameNumbers.info.abbreviation;
+  gameDom.unitDescription.innerHTML = gameNumbers.info.description;
 }
 
 api.updateScore = () => {
   let roundedScore = Math.round((state.session.score + Number.EPSILON) * 100) / 100;
   let roundedEarning = Math.round((state.session.earning + Number.EPSILON) * 100) / 100;
 
-  domElements.scoreMod.innerHTML = state.session.scoreModifier;
-  domElements.score.innerHTML = roundedScore;
-  domElements.earning.innerHTML = roundedEarning;
-  domElements.earningMod.innerHTML = state.session.earningModifier;
-  domElements.click.innerHTML = state.session.clickingPower;
-  domElements.clickMod.innerHTML = state.session.clickingPowerModifier;
+  gameDom.scoreMod.innerHTML = state.session.scoreModifier;
+  gameDom.score.innerHTML = roundedScore;
+  gameDom.earning.innerHTML = roundedEarning;
+  gameDom.earningMod.innerHTML = state.session.earningModifier;
+  gameDom.click.innerHTML = state.session.clickingPower;
+  gameDom.clickMod.innerHTML = state.session.clickingPowerModifier;
 }
 
 api.tick = () => {
