@@ -51,16 +51,16 @@ const api = {};
 
 api.bootstrap = () => {
     logger.traceMethod('bootstrapAndStart');
-    
-    gameSave.loadState();
+
     _bindDomEventListeners();
+    gameSave.loadState();
     buildings.updateBuildings();
     state.session.tickMultiplier = buildings.calculateTickMultiplier();
     
     ui.updateScore();
     ui.updateClick();
     ui.updateEarning();
-    
+
     _tick();
 }
 

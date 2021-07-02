@@ -28,9 +28,6 @@ api.showUpgradesMenu = () => {
 }
 
 api.updateScore = () => {
-
-  console.log('state.session.score', state.session.score)
-
   gameDom.score.innerHTML = numbers.formatScore(state.session.score);
 
   if(state.session.scoreModifier !== numbers.scoreInfo.abbreviation) {
@@ -44,7 +41,7 @@ api.updateScore = () => {
 }
 
 api.updateClick = () => {
-  logger.traceMethod('updateClick');
+  logger.traceMethod('updateClick', state.session.clickPower);
   gameDom.click.innerHTML = numbers.formatClick(state.session.clickPower);
 
   if(state.session.clickPowerModifier !== numbers.clickInfo.abbreviation) {
@@ -54,7 +51,7 @@ api.updateClick = () => {
 }
 
 api.updateEarning = () => {
-  logger.traceMethod('updateEarning');
+  logger.traceMethod('updateEarning', state.session.earning);
   gameDom.earning.innerHTML = numbers.formatEarning(state.session.earning);
 
   if(state.session.earningModifier !== numbers.earningInfo.abbreviation) {

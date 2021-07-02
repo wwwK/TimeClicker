@@ -230,6 +230,8 @@ api.updateBuildings = () => {
 }
 
 api.calculateTickMultiplier = () => {
+  logger.traceMethod('calculateTickMultiplier');
+  
   return buildings.names.reduce((multiplier, name, index) => {
     multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
     return multiplier;

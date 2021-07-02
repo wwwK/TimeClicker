@@ -29,19 +29,45 @@ internal.handleAutoSave = () => {
     internal.saveTickCounter += 1;
 }
 
+internal.snapshotBuildings = () => {
+  const buildings = state.buildings;
+
+  const _buildings = {
+    ach: [],
+    cnt: [...state.buildings.counts],
+    cst: [...state.buildings.costs],
+    na: [...state.buildings.nextAchievement],
+    tm: [...state.buildings.tickMultipliers]
+  };
+
+  _buildings.ach = buildings.achievements.reduce((memo, current, index) => {
+    memo.push((current ?? []).reduce((memo2, current2) => {
+      memo2.push(current2 ? 1 : 0);
+      return memo2;
+    }, []));
+    return memo;
+  }, []);
+
+  return _buildings;
+}
+
 internal.saveLocal = () => {
     logger.traceMethod('_saveLocal');
 
     const save = {
-      session: { ...state.session }
+      session: { ...state.session },
+      config: { ...state.config },
+      build: internal.snapshotBuildings()
     };
 
     // Basic save cleanup
     if(save.session?.clickPowerModifier) { delete save.session.clickPowerModifier;}
     if(save.session?.earningModifier) { delete save.session.earningModifier; }
     if(save.session?.scoreModifier) { delete save.session.scoreModifier; }
+    if(save.config?.gameLoopSleepMs) { delete save.config.gameLoopSleepMs; }
+    if(save.config?.targetTicksPerSec) { delete save.config.targetTicksPerSec; }
 
-    console.log('saving...', JSON.stringify(save, null, 2));
+    console.log('saving...', JSON.stringify(save));
     storage.setItem(SAVE_KEY, save);
 }
 

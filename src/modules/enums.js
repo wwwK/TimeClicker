@@ -1,12 +1,12 @@
 const module = {
-  numbers: 'module.numbers',
-  buildings: 'module.buildings',
-  gameState: 'module.game-state',
-  storage: 'module.storage',
-  toaster: 'module.toaster',
-  ui: 'module.ui',
-  game: 'module.game',
-  gameSave: 'module.game-save'
+  numbers: 'numbers',
+  buildings: 'buildings',
+  gameState: 'game-state',
+  storage: 'storage',
+  toaster: 'toaster',
+  ui: 'ui',
+  game: 'game',
+  gameSave: 'game-save'
 };
 
 const severity = {
@@ -17,7 +17,13 @@ const severity = {
   Error: 5
 };
 
+const placeholder = {
+  na: 'n/a',
+  undefined: '(undefined)'
+};
+
 export const enums = {
   module: module,
-  severity: severity
+  severity: severity,
+  placeholder: placeholder
 };
