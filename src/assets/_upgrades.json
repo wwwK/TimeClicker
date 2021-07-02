@@ -1,0 +1,15 @@
+{
+  "clicks": [
+    {
+      "condition": 1,
+      "type": "click_multiplier",
+      "name": "Double Click",
+      "description": "Two for one, what more could you want",
+      "value": 2,
+      "visible": false,
+      "bought": false,
+      "image": "assets/cursor.png"
+    }
+  ],
+  "buildingCounts": []
+}

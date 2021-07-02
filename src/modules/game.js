@@ -6,6 +6,7 @@ import ui from "./ui";
 import { loggerFactory } from './logger';
 import { enums } from "./enums";
 import gameSave from './game-save';
+import upgrades from './upgrades';
 
 const logger = loggerFactory.getInstance(enums.module.game);
 let gameTickInterval = undefined;
@@ -56,6 +57,7 @@ api.bootstrap = () => {
     gameSave.loadState();
     buildings.updateBuildings();
     buildings.updateTickMultiplier();
+    upgrades.initialize();
     
     ui.updateScore();
     ui.updateClick();

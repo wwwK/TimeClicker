@@ -5,12 +5,13 @@ const config = {
   disabledModules: [
     enums.module.numbers,
     enums.module.buildings,
-    // enums.module.gameState,
+    enums.module.gameState,
     enums.module.storage,
     enums.module.toaster,
     enums.module.ui,
-    // enums.module.game,
-    // enums.module.gameSave,
+    enums.module.game,
+    enums.module.gameSave,
+    enums.module.upgrades,
   ],
   minSeverity: enums.severity.Trace,
   traceModuleLoad: true

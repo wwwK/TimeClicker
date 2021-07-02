@@ -5,6 +5,7 @@ import { enums } from './enums';
 const logger = loggerFactory.getInstance(enums.module.gameState);
 const buildings = require('../assets/_buildings.json');
 const achievements = require('../assets/_achievements.json');
+const upgrades = require('../assets/_upgrades.json');
 
 const session = {
   // Saved
@@ -24,7 +25,7 @@ const session = {
 const config = {
   targetTicksPerSec: 4,
   gameLoopSleepMs: 0,
-  autoSave: true,
+  autoSave: false,
   autoSaveInt: 60
 }
 
@@ -60,7 +61,8 @@ const api = {
   buildings: buildings,
   achievements: achievements,
   session: session,
-  config: config
+  config: config,
+  upgrades: upgrades
 }
 
 api.handleClick = () => {

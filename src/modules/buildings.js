@@ -172,7 +172,10 @@ const _buyBuilding = (index) => {
   gameDom.score.innerHTML = state.session.score;
 
   state.session.earning = api.calculateTickMultiplier();
+  
+  ui.updateEarning();
   ui.updateScore();
+
   _updateCanBuy();
 }
 

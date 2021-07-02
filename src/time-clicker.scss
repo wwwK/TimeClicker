@@ -151,6 +151,24 @@ body {
 
             #tc_upgrades {
               display: none;
+
+              .upgrade {
+                display: inline-block;
+                border: 1px solid #464242;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                background-color: #fff;
+                cursor: pointer;
+                border-radius: 4px;
+                box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.34);
+                margin-right: 4px;
+                
+                img {
+                  max-width: 28px;
+                  max-height: 28px;
+                }
+              }
             }
           }
         }

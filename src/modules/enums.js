@@ -6,7 +6,8 @@ const module = {
   toaster: 'toaster',
   ui: 'ui',
   game: 'game',
-  gameSave: 'game-save'
+  gameSave: 'game-save',
+  upgrades: 'upgrades'
 };
 
 const severity = {
