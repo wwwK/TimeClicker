@@ -4,19 +4,24 @@ import { loggerFactory } from './logger';
 const logger = loggerFactory.getInstance(enums.module.numbers);
 const numberInfo = require('../assets/_numbers.json');
 
-let currentIndex = 0;
 const api = {};
 
-const currentInfo  = {
-  abbreviation: numberInfo.abbreviations[currentIndex],
-  name: numberInfo.names[currentIndex],
-  multiplier: numberInfo.multipliers[currentIndex],
-  url: numberInfo.urls[currentIndex],
-  description: numberInfo.descriptions[currentIndex]
+const internal = {
+  lastScoreLength: 0,
+  currentScoreDivider: 1
 };
 
-const _findClosestMultiplier = (value) => {
-  logger.traceMethod('_findClosestMultiplier', value);
+const currentInfo  = {
+  abbreviation: undefined,
+  name: undefined,
+  multiplier: undefined,
+  url: undefined,
+  description: undefined
+}
+
+
+internal.findClosestMultiplier = (value) => {
+  logger.traceMethod('findClosestMultiplier', value);
 
   for(let i = numberInfo.multipliers.length - 1; i >= 0; i--) {
     if(numberInfo.multipliers[i] <= value) {
@@ -27,6 +32,19 @@ const _findClosestMultiplier = (value) => {
   return -1;
 }
 
+internal.getNumberLength = (value) => {
+  return Math.ceil(Math.log(value + 1) / Math.LN10);
+}
+
+internal.setCurrentInfo = (idx) => {
+  currentInfo.abbreviation = numberInfo.abbreviations[idx];
+  currentInfo.name = numberInfo.names[idx];
+  currentInfo.multiplier = numberInfo.multipliers[idx];
+  currentInfo.url = numberInfo.urls[idx];
+  currentInfo.description = numberInfo.descriptions[idx];
+}
+
+internal.setCurrentInfo(0);
 
 /* **********************************************************************
 * Define an external API
@@ -47,7 +65,7 @@ api.format = (value, append) => {
     return `${rounded} ${numberInfo.abbreviations[0]}${append}`;
   }
 
-  const index = _findClosestMultiplier(value);
+  const index = internal.findClosestMultiplier(value);
 
   if(index === -1) {
     return 'NaN';
@@ -59,7 +77,19 @@ api.format = (value, append) => {
 }
 
 api.getMoreInfoUrl = () => {
-  return numberInfo.urls[currentIndex];
+  return currentInfo.url;
+}
+
+api.formatScore = (value) => {
+  const length = internal.getNumberLength(value);
+
+  if(internal.lastScoreLength !== length) {
+    internal.lastScoreLength = length;
+    internal.setCurrentInfo(internal.findClosestMultiplier(value));
+  }
+
+  let relativeValue = value / currentInfo.multiplier;
+  return Math.round((relativeValue + Number.EPSILON) * 100) / 100;
 }
 
 export default api;

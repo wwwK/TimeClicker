@@ -11,6 +11,20 @@ const logger = loggerFactory.getInstance(enums.module.game);
 let gameTickInterval = undefined;
 let bootstrapped = false;
 
+// Utils
+const utils = {};
+
+utils.handleClick = () => {
+    logger.traceMethod('handleClick');
+    state.handleClick();
+    ui.updateScore();
+}
+
+utils.launchUnitInfo = () => {
+    logger.traceMethod('launchUnitInfo');
+    window.open(numbers.getMoreInfoUrl(), '_blank');
+}
+
 
 // Internal methods
 const _tick = () => {
@@ -24,15 +38,8 @@ const _bindDomEventListeners = () => {
     if(bootstrapped) { return; }
     bootstrapped = true;
 
-    gameDom.clock.addEventListener('click', () => {
-        state.handleClick();
-        ui.updateScore();
-    }, true);
-
-    gameDom.unitMoreInfo.addEventListener('click', () => {
-        window.open(numbers.getMoreInfoUrl(), '_blank');
-    });
-    
+    gameDom.clock.addEventListener('click', utils.handleClick, true);
+    gameDom.unitMoreInfo.addEventListener('click', utils.launchUnitInfo);
     gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
     gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
 }

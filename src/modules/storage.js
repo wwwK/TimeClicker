@@ -18,8 +18,6 @@ const _saveLocal = () => {
 
 // Public API
 api.tick = () => {
-    console.log('tick');
-
     if(saveCounter % targetTicksPerSec === 0) {
         if(new Date() > nextSaveDate) { _saveLocal(); }
         saveCounter = 0;

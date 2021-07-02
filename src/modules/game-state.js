@@ -6,7 +6,6 @@ const logger = loggerFactory.getInstance(enums.module.gameState);
 
 const session = {
   score: 0,
-  scoreModifier: 'fs',
   clickCount: 0,
   clickingPower: 100000,
   clickingPowerModifier: 'fs',

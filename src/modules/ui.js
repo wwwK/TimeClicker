@@ -9,11 +9,9 @@ const logger = loggerFactory.getInstance(enums.module.ui);
 /* **********************************************************************
 * Internal methods
 ********************************************************************** */
-const internal = {};
-
-internal.updateScoreModifier = () => {
-  gameDom.scoreMod.innerHTML = state.session.scoreModifier;
-}
+const internal = {
+  currentScoreModifier: undefined
+};
 
 internal.updateEarningModifier = () => {
   gameDom.earningMod.innerHTML = state.session.earningModifier;
@@ -49,10 +47,12 @@ api.updateCurrentUnit = () => {
 }
 
 api.updateScore = () => {
-  let roundedScore = Math.round((state.session.score + Number.EPSILON) * 100) / 100;
-  gameDom.score.innerHTML = roundedScore;
+  gameDom.score.innerHTML = numbers.formatScore(state.session.score);
 
-  internal.updateScoreModifier();
+  if(internal.currentScoreModifier !== numbers.info.abbreviation) {
+    internal.currentScoreModifier = numbers.info.abbreviation;
+    gameDom.scoreMod.innerHTML = numbers.info.abbreviation;
+  }
 }
 
 api.updateClick = () => {

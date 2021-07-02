@@ -1,6 +1,7 @@
 import { enums } from "./enums";
 
 const config = {
+  enabled: false,
   disabledModules: [
     // enums.module.numbers,
     // enums.module.buildings,
@@ -29,7 +30,10 @@ _logger.trace = (message, ...args) => {
 class LoggerInstance {
   constructor(module) {
     this._module = module;
+
+    // Handle disabling this logger instance
     this._enabled = config.disabledModules.indexOf(module) === -1;
+    if(config.enabled === false) { this._enabled = false; }
     
     if(this._enabled && config.traceModuleLoad) {
       _logger.trace(`Module "${this._module}" loaded`);
