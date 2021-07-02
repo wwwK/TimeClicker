@@ -9,11 +9,9 @@ const session = {
   scoreModifier: undefined,
   clickPower: 100000,
   clickPowerModifier: undefined,
-
-
-  clickCount: 0,
   earning: 0,
-  earningModifier: 'fs',
+  earningModifier: undefined,
+  clickCount: 0,
 
   lifetimeScore: 0,
   lifetimeClickCount: 0,

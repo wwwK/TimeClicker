@@ -21,10 +21,19 @@ const clickNumberInfo = {
   description: undefined
 }
 
+const earningNumberInfo = {
+  abbreviation: undefined,
+  name: undefined,
+  multiplier: undefined,
+  url: undefined,
+  description: undefined
+}
+
 
 const internal = {
   lastScoreLength: 0,
-  lastClickLength: 0
+  lastClickLength: 0,
+  lastEarningLength: 0
 }
 
 internal.findClosestMultiplier = (value) => {
@@ -59,24 +68,31 @@ internal.setClickNumberInfo = (idx) => {
   clickNumberInfo.description = numberInfo.descriptions[idx];
 }
 
+internal.setEarningNumberInfo = (idx) => {
+  earningNumberInfo.abbreviation = numberInfo.abbreviations[idx];
+  earningNumberInfo.name = numberInfo.names[idx];
+  earningNumberInfo.multiplier = numberInfo.multipliers[idx];
+  earningNumberInfo.url = numberInfo.urls[idx];
+  earningNumberInfo.description = numberInfo.descriptions[idx];
+}
+
 internal.setScoreNumberInfo(0);
 internal.setClickNumberInfo(0);
+internal.setEarningNumberInfo(0);
 
 /* **********************************************************************
 * Define an external API
 ********************************************************************** */
 const api = {
   scoreInfo: scoreNumberInfo,
-  clickInfo: clickNumberInfo
+  clickInfo: clickNumberInfo,
+  earningInfo: earningNumberInfo
 };
 
 api.format = (value, append) => {
   logger.traceMethod('format', value);
 
-  if(typeof value !== 'number') { 
-    return 'NaN';
-  }
-
+  if(typeof value !== 'number') { return 'NaN'; }
   append = append ?? '';
 
   if(value < 1) {
@@ -86,10 +102,7 @@ api.format = (value, append) => {
 
   const index = internal.findClosestMultiplier(value);
 
-  if(index === -1) {
-    return 'NaN';
-  }
-
+  if(index === -1) { return 'NaN'; }
   let formatted = value / numberInfo.multipliers[index];
   let rounded = Math.round((formatted + Number.EPSILON) * 100) / 100;
   return `${rounded} ${numberInfo.abbreviations[index]}${append}`;
@@ -120,6 +133,18 @@ api.formatClick = (value) => {
   }
 
   let relativeValue = value / clickNumberInfo.multiplier;
+  return Math.round((relativeValue + Number.EPSILON) * 100) / 100;
+}
+
+api.formatEarning = (value) => {
+  const length = internal.getNumberLength(value);
+
+  if(internal.lastEarningLength !== length) {
+    internal.lastEarningLength = length;
+    internal.setEarningNumberInfo(internal.findClosestMultiplier(value));
+  }
+
+  let relativeValue = value / earningNumberInfo.multiplier;
   return Math.round((relativeValue + Number.EPSILON) * 100) / 100;
 }
 

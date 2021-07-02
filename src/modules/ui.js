@@ -7,23 +7,6 @@ import { enums } from "./enums";
 const logger = loggerFactory.getInstance(enums.module.ui);
 
 /* **********************************************************************
-* Internal methods
-********************************************************************** */
-const internal = {};
-
-internal.updateEarningModifier = () => {
-  gameDom.earningMod.innerHTML = state.session.earningModifier;
-}
-
-internal.updateCurrentUnit = () => {
-  logger.traceMethod('_updateCurrentUnit');
-  gameDom.unitName.innerHTML = numbers.scoreInfo.name;
-  gameDom.unitAbbreviation.innerHTML = numbers.scoreInfo.abbreviation;
-  gameDom.unitDescription.innerHTML = numbers.scoreInfo.description;
-}
-
-
-/* **********************************************************************
 * Define an external API
 ********************************************************************** */
 const api = {};
@@ -50,7 +33,10 @@ api.updateScore = () => {
   if(state.session.scoreModifier !== numbers.scoreInfo.abbreviation) {
     state.session.scoreModifier = numbers.scoreInfo.abbreviation;
     gameDom.scoreMod.innerHTML = numbers.scoreInfo.abbreviation;
-    internal.updateCurrentUnit();
+
+    gameDom.unitName.innerHTML = numbers.scoreInfo.name;
+    gameDom.unitAbbreviation.innerHTML = numbers.scoreInfo.abbreviation;
+    gameDom.unitDescription.innerHTML = numbers.scoreInfo.description;
   }
 }
 
@@ -66,8 +52,12 @@ api.updateClick = () => {
 
 api.updateEarning = () => {
   logger.traceMethod('updateEarning');
-  let roundedEarning = Math.round((state.session.earning + Number.EPSILON) * 100) / 100;
-  gameDom.earning.innerHTML = roundedEarning;
+  gameDom.earning.innerHTML = numbers.formatEarning(state.session.earning);
+
+  if(state.session.earningModifier !== numbers.earningInfo.abbreviation) {
+    state.session.earningModifier = numbers.earningInfo.abbreviation;
+    gameDom.earningMod.innerHTML = state.session.earningModifier;
+  }
 }
 
 api.tick = () => {
