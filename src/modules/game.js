@@ -52,14 +52,13 @@ api.bootstrap = () => {
     logger.traceMethod('bootstrapAndStart');
 
     _bindDomEventListeners();
-    
-    ui.updateClick();
-    ui.updateEarning();
-    ui.updateScore();
-
     buildings.updateBuildings();
     state.session.tickMultiplier = buildings.calculateTickMultiplier();
     _tick();
+
+    ui.updateClick();
+    ui.updateEarning();
+    ui.updateScore();
 }
 
 api.start = () => {

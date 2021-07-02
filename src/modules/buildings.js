@@ -1,7 +1,7 @@
 import gameDom from './dom';
 import numbers from './numbers';
 import state from './game-state';
-import { toast } from './toast.module';
+import { toaster } from './toaster';
 import ui from './ui';
 import { loggerFactory } from './logger';
 import { enums } from './enums';
@@ -84,7 +84,7 @@ const _applyBuildingSpecificAchievement = (index, achievement) => {
     .replace('{epsNew}', buildings.tickMultipliers[index])
     .replace('{epsModifier}', state.session.earningModifier);
 
-  toast.show({
+    toaster.show({
     title: achievement.name,
     body: formattedMessage
   });
@@ -123,7 +123,7 @@ const _applyMilestoneMultiplier = (index, multiplier) => {
   let roundedChange = Math.round((change + Number.EPSILON) * 100) / 100;
 
   _updateUiBuildingGeneratorValue(index);
-  toast.show({
+  toaster.show({
     title: `"${buildingName}" upgraded`,
     body: `Generating additional ${roundedChange} ${state.session.earningModifier} / sec`
   });

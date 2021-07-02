@@ -7,7 +7,7 @@ const config = {
     // enums.module.buildings,
     // enums.module.gameState,
     // enums.module.storage,
-    // enums.module.toast,
+    // enums.module.toaster,
     // enums.module.ui,
     // enums.module.game,
   ],
