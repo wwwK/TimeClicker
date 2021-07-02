@@ -3,27 +3,48 @@ import state from "./game-state";
 import { loggerFactory } from './logger';
 
 const logger = loggerFactory.getInstance(enums.module.storage);
+const saveCheckMod = state.config.targetTicksPerSec * 2;
 
-const api = {};
-let saveCounter = 0;
-let nextSaveDate = new Date((new Date()).getTime() + 1000);
-const targetTicksPerSec = state.config.targetTicksPerSec;
+const internal = {
+    saveTickCounter: 0,
+    nextSaveDate: new Date(new Date().getTime() + 30000),
+    autoSaveEnabled: false
+};
 
+internal.handleAutoSave = () => {
+    if(!internal.autoSaveEnabled) { return; }
 
-const _saveLocal = () => {
-    nextSaveDate = new Date((new Date()).getTime() + 30000);
-    console.log('saving...', state);
+    if(internal.saveTickCounter % saveCheckMod === 0) {
+        if(new Date() < internal.nextSaveDate) {
+            internal.saveLocal();
+        }
+        internal.saveTickCounter = 0;
+    }
+
+    internal.saveTickCounter += 1;
+}
+
+internal.saveLocal = () => {
+    logger.traceMethod('_saveLocal');
+
+    const saveFile = {
+        state: { ...state.session }
+    };
+
+    internal.nextSaveDate = new Date((new Date()).getTime() + 30000);
+    console.log('saving...', JSON.stringify(saveFile, null, 2));
 }
 
 
 // Public API
+const api = {};
+
 api.tick = () => {
-    if(saveCounter % targetTicksPerSec === 0) {
-        if(new Date() > nextSaveDate) { _saveLocal(); }
-        saveCounter = 0;
-    }
-    
-    saveCounter += 1;
+    internal.handleAutoSave();
+}
+
+api.save = () => {
+    internal.saveLocal();
 }
 
 export default api;

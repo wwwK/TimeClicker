@@ -42,6 +42,7 @@ const _bindDomEventListeners = () => {
     gameDom.unitMoreInfo.addEventListener('click', utils.launchUnitInfo);
     gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
     gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
+    gameDom.saveButton.addEventListener('click', storage.save, true);
 }
 
 

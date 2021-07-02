@@ -17,5 +17,6 @@ export default {
   unitAbbreviation: document.getElementById('unit_abbr'),
   unitDescription: document.getElementById('unit_description'),
   unitMoreInfo: document.getElementById('unit_more_info'),
-  toaster: document.getElementById('toaster')
+  toaster: document.getElementById('toaster'),
+  saveButton: document.getElementById('saveButton')
 };
