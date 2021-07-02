@@ -1,11 +1,11 @@
 import gameDom from "./dom";
 import state from "./game-state";
-import storage from "./storage";
 import buildings from './buildings';
 import numbers from './numbers';
 import ui from "./ui";
 import { loggerFactory } from './logger';
 import { enums } from "./enums";
+import gameSave from './game-save';
 
 const logger = loggerFactory.getInstance(enums.module.game);
 let gameTickInterval = undefined;
@@ -31,7 +31,7 @@ const _tick = () => {
     buildings.tick();
     state.tick();
     ui.tick();
-    storage.tick();
+    gameSave.tick();
 }
 
 const _bindDomEventListeners = () => {
@@ -42,7 +42,7 @@ const _bindDomEventListeners = () => {
     gameDom.unitMoreInfo.addEventListener('click', utils.launchUnitInfo);
     gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
     gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
-    gameDom.saveButton.addEventListener('click', storage.save, true);
+    gameDom.saveButton.addEventListener('click', gameSave.save, true);
 }
 
 
@@ -51,15 +51,17 @@ const api = {};
 
 api.bootstrap = () => {
     logger.traceMethod('bootstrapAndStart');
-
+    
+    gameSave.loadState();
     _bindDomEventListeners();
     buildings.updateBuildings();
     state.session.tickMultiplier = buildings.calculateTickMultiplier();
-    _tick();
-
+    
+    ui.updateScore();
     ui.updateClick();
     ui.updateEarning();
-    ui.updateScore();
+    
+    _tick();
 }
 
 api.start = () => {

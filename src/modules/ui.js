@@ -28,6 +28,9 @@ api.showUpgradesMenu = () => {
 }
 
 api.updateScore = () => {
+
+  console.log('state.session.score', state.session.score)
+
   gameDom.score.innerHTML = numbers.formatScore(state.session.score);
 
   if(state.session.scoreModifier !== numbers.scoreInfo.abbreviation) {

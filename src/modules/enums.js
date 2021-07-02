@@ -5,7 +5,8 @@ const module = {
   storage: 'module.storage',
   toaster: 'module.toaster',
   ui: 'module.ui',
-  game: 'module.game'
+  game: 'module.game',
+  gameSave: 'module.game-save'
 };
 
 const severity = {

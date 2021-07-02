@@ -5,22 +5,24 @@ import { enums } from './enums';
 const logger = loggerFactory.getInstance(enums.module.gameState);
 
 const session = {
+  // Saved
   score: 0,
-  scoreModifier: undefined,
   clickPower: 100000,
-  clickPowerModifier: undefined,
   earning: 0,
-  earningModifier: undefined,
   clickCount: 0,
-
   lifetimeScore: 0,
   lifetimeClickCount: 0,
-};
+
+  // Auto-generated
+  clickPowerModifier: undefined,
+  scoreModifier: undefined,
+  earningModifier: undefined,
+}
 
 const config = {
   targetTicksPerSec: 4,
   gameLoopSleepMs: 0
-};
+}
 
 /* **********************************************************************
 * Load buildings and achievements
@@ -60,10 +62,23 @@ const api = {
 
 api.handleClick = () => {
   session.score += session.clickPower;
-  session.sessionScore += session.clickPower;
+  session.lifetimeScore += session.clickPower;
 
   session.clickCount += 1;
   session.lifetimeClickCount += 1;
+}
+
+api.loadSave = (save) => {
+  logger.traceMethod('loadSave');
+
+  const _session = save?.session ?? {};
+  session.clickCount = _session?.clickCount ?? session.clickCount;
+  session.clickPower = _session?.clickPower ?? session.clickPower;
+  session.earning = _session?.earning ?? session.earning;
+  session.lifetimeClickCount = _session?.lifetimeClickCount ?? session.lifetimeClickCount;
+  session.lifetimeScore = _session?.lifetimeScore ?? session.lifetimeScore;
+  session.score = _session?.score ?? session.score;
+  session.tickMultiplier = _session?.tickMultiplier ?? session.tickMultiplier;
 }
 
 api.tick = () => {

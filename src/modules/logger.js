@@ -1,15 +1,16 @@
 import { enums } from "./enums";
 
 const config = {
-  enabled: false,
+  enabled: true,
   disabledModules: [
-    enums.module.numbers,
-    enums.module.buildings,
-    enums.module.gameState,
-    enums.module.storage,
-    enums.module.toaster,
-    enums.module.ui,
-    enums.module.game,
+    // enums.module.numbers,
+    // enums.module.buildings,
+    // enums.module.gameState,
+    // enums.module.storage,
+    // enums.module.toaster,
+    // enums.module.ui,
+    // enums.module.game,
+    // enums.module.gameSave,
   ],
   minSeverity: enums.severity.Trace,
   traceModuleLoad: true
@@ -24,6 +25,11 @@ _logger.canLog = (severity) => {
 _logger.trace = (message, ...args) => {
   if(!_logger.canLog(enums.severity.Trace)) { return; }
   console.log(message, ...args);
+}
+
+_logger.error = (message, ...args) => {
+  if(!_logger.canLog(enums.severity.Trace)) { return; }
+  console.error(message, ...args);
 }
 
 
@@ -44,6 +50,11 @@ class LoggerInstance {
     if(!this._canLog()) { return; }
     let append = (args?.length ?? 0) === 0 ? 'called' : '';
     _logger.trace(`${this._module}.${method}() :: ${append}`, ...args);
+  }
+
+  error = (method, error) => {
+    if(!this._canLog()) { return; }
+    _logger.error(`${this._module}.${method}() :: ${error}`);
   }
 
   _canLog = () => {
