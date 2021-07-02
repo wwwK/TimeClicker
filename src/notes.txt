@@ -1,4 +1,5 @@
 https://en.wikipedia.org/wiki/Unit_of_time
+https://en.wikipedia.org/wiki/Unit_of_time#/media/File:Units_of_Time_in_tabular_form.png
 
 nsec  nanosecond    1 000,000
 μs    microsecond   1 000 000 000

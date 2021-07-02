@@ -8,43 +8,57 @@ import { loggerFactory } from './logger';
 import { enums } from "./enums";
 
 const logger = loggerFactory.getInstance(enums.module.game);
+let gameTickInterval = undefined;
+let bootstrapped = false;
 
 
-/* **********************************************************************
-* Define an external API
-********************************************************************** */
-const api = {};
-
-api.tick = () => {
+// Internal methods
+const _tick = () => {
     storage.tick();
     state.tick();
     buildings.tick();
     ui.tick();
 }
 
+const _bindDomEventListeners = () => {
+    if(bootstrapped) { return; }
+    bootstrapped = true;
 
-/* **********************************************************************
-* Bind all DOM event listeners
-********************************************************************** */
-gameDom.clock.addEventListener('click', () => {
-    state.handleClick();
-    ui.updateScore();
-}, true);
+    gameDom.clock.addEventListener('click', () => {
+        state.handleClick();
+        ui.updateScore();
+    }, true);
 
-gameDom.unitMoreInfo.addEventListener('click', () => {
-    window.open(numbers.getMoreInfoUrl(), '_blank');
-});
-
-gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
-gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
+    gameDom.unitMoreInfo.addEventListener('click', () => {
+        window.open(numbers.getMoreInfoUrl(), '_blank');
+    });
+    
+    gameDom.menuTabBuildings.addEventListener('click', ui.showBuildingsMenu);
+    gameDom.menuTabUpgrades.addEventListener('click', ui.showUpgradesMenu);
+}
 
 
-/* **********************************************************************
-* Bootstrap and return the external API
-********************************************************************** */
-ui.updateCurrentUnit();
-buildings.updateBuildings();
-state.session.tickMultiplier = buildings.calculateTickMultiplier();
-api.tick();
+// External API
+const api = {};
+
+api.bootstrap = () => {
+    logger.traceMethod('bootstrapAndStart');
+
+    _bindDomEventListeners();
+    ui.updateCurrentUnit();
+    buildings.updateBuildings();
+    state.session.tickMultiplier = buildings.calculateTickMultiplier();
+    _tick();
+}
+
+api.start = () => {
+    if(gameTickInterval) { return; }
+    logger.traceMethod('start');
+
+    gameTickInterval = setInterval(
+        _tick,
+        state.config.gameLoopSleepMs
+    );
+}
 
 export default api;
