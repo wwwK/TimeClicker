@@ -8,6 +8,15 @@ const module = {
   game: 'module.game'
 };
 
+const severity = {
+  Trace: 1,
+  Debug: 2,
+  Info: 3,
+  Warn: 4,
+  Error: 5
+};
+
 export const enums = {
-  module: module
+  module: module,
+  severity: severity
 };
