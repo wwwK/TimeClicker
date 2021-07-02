@@ -5,8 +5,9 @@ import buildings from './buildings';
 import numbers from './numbers.module';
 import ui from "./ui";
 import { loggerFactory } from './logger';
+import { enums } from "./enums";
 
-const logger = loggerFactory.getInstance('game');
+const logger = loggerFactory.getInstance(enums.module.game);
 
 
 /* **********************************************************************

@@ -1,7 +1,8 @@
 import gameDom from "./dom";
+import { enums } from "./enums";
 import { loggerFactory } from './logger';
 
-const logger = loggerFactory.getInstance('toast');
+const logger = loggerFactory.getInstance(enums.module.toast);
 
 let toastId = 1;
 let toasts = {};

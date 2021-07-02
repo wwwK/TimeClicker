@@ -1,5 +1,15 @@
-const config = {
+import { enums } from "./enums";
 
+const config = {
+  disabledModules: [
+    enums.module.numbers,
+    enums.module.buildings,
+    enums.module.gameState,
+    enums.module.storage,
+    enums.module.toast,
+    enums.module.ui,
+    enums.module.game,
+  ]
 };
 
 const _logger = {};
@@ -17,13 +27,23 @@ _logger.trace = (message, ...args) => {
 class LoggerInstance {
   constructor(module) {
     this._module = module;
-
-    _logger.traceModuleLoad(this._module);
+    this._enabled = config.disabledModules.indexOf(module) === -1;
+    
+    if(this._enabled) {
+      _logger.traceModuleLoad(this._module);
+    }
   }
 
   traceMethod = (method, ...args) => {
-    let append = (args?.length ?? 0) === 0 ? ' called' : '';
-    _logger.trace(`[${this._module}.${method}()]${append}`, ...args);
+    if(!this._canLog()) { return; }
+    let append = (args?.length ?? 0) === 0 ? 'called' : '';
+    _logger.trace(`${this._module}.${method}() :: ${append}`, ...args);
+  }
+
+  _canLog = () => {
+    if(!this._enabled) { return false; }
+
+    return true;
   }
 }
 

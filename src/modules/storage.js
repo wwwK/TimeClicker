@@ -1,7 +1,8 @@
+import { enums } from "./enums";
 import state from "./game-state";
 import { loggerFactory } from './logger';
 
-const logger = loggerFactory.getInstance('storage');
+const logger = loggerFactory.getInstance(enums.module.storage);
 
 const api = {};
 let saveCounter = 0;

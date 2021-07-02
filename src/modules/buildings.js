@@ -4,8 +4,9 @@ import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';
 import { loggerFactory } from './logger';
+import { enums } from './enums';
 
-const logger = loggerFactory.getInstance('buildings');
+const logger = loggerFactory.getInstance(enums.module.buildings);
 const api = {};
 const buildings = state.buildings;
 const achievements = state.achievements;

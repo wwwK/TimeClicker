@@ -1,7 +1,8 @@
 import numbers from './numbers.module';
 import { loggerFactory } from './logger';
+import { enums } from './enums';
 
-const logger = loggerFactory.getInstance('game-state');
+const logger = loggerFactory.getInstance(enums.module.gameState);
 
 const session = {
   score: 0,
