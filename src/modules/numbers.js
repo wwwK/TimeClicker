@@ -1,5 +1,5 @@
 import { enums } from './enums';
-import { loggerFactory } from './logger';
+import { devLogger, loggerFactory } from './logger';
 
 const logger = loggerFactory.getInstance(enums.module.numbers);
 const numberInfo = require('../assets/_numbers.json');
@@ -39,12 +39,19 @@ const internal = {
 internal.findClosestMultiplier = (value) => {
   logger.traceMethod('findClosestMultiplier', value);
 
+  // Save hitting the loop if we can
+  if(value > 0 && value < 1) {
+    return 0;
+  }
+
+  // Try to find a match
   for(let i = numberInfo.multipliers.length - 1; i >= 0; i--) {
     if(numberInfo.multipliers[i] <= value) {
       return i;
     }
   }
 
+  // No match found
   return -1;
 }
 
@@ -53,6 +60,8 @@ internal.getNumberLength = (value) => {
 }
 
 internal.setScoreNumberInfo = (idx) => {
+  logger.traceMethod('setScoreNumberInfo', idx);
+
   scoreNumberInfo.abbreviation = numberInfo.abbreviations[idx];
   scoreNumberInfo.name = numberInfo.names[idx];
   scoreNumberInfo.multiplier = numberInfo.multipliers[idx];
@@ -61,6 +70,8 @@ internal.setScoreNumberInfo = (idx) => {
 }
 
 internal.setClickNumberInfo = (idx) => {
+  logger.traceMethod('setClickNumberInfo', idx);
+
   clickNumberInfo.abbreviation = numberInfo.abbreviations[idx];
   clickNumberInfo.name = numberInfo.names[idx];
   clickNumberInfo.multiplier = numberInfo.multipliers[idx];
@@ -69,6 +80,8 @@ internal.setClickNumberInfo = (idx) => {
 }
 
 internal.setEarningNumberInfo = (idx) => {
+  logger.traceMethod('setEarningNumberInfo', idx);
+
   earningNumberInfo.abbreviation = numberInfo.abbreviations[idx];
   earningNumberInfo.name = numberInfo.names[idx];
   earningNumberInfo.multiplier = numberInfo.multipliers[idx];
@@ -138,6 +151,7 @@ api.formatClick = (value) => {
 
 api.formatEarning = (value) => {
   const length = internal.getNumberLength(value);
+  logger.traceMethod('formatEarning', value, length);
 
   if(internal.lastEarningLength !== length) {
     internal.lastEarningLength = length;

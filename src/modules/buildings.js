@@ -230,12 +230,18 @@ api.updateBuildings = () => {
 }
 
 api.calculateTickMultiplier = () => {
-  logger.traceMethod('calculateTickMultiplier');
-  
-  return buildings.names.reduce((multiplier, name, index) => {
+  const multiplier = buildings.names.reduce((multiplier, name, index) => {
     multiplier += buildings.counts[index] * buildings.tickMultipliers[index];
     return multiplier;
   }, 0);
+
+  logger.traceMethod('calculateTickMultiplier', multiplier);
+  return multiplier;
+}
+
+api.updateTickMultiplier = () => {
+  logger.traceMethod('updateTickMultiplier');
+  state.session.earning = api.calculateTickMultiplier();
 }
 
 api.tick = () => {

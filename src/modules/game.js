@@ -55,7 +55,7 @@ api.bootstrap = () => {
     _bindDomEventListeners();
     gameSave.loadState();
     buildings.updateBuildings();
-    state.session.tickMultiplier = buildings.calculateTickMultiplier();
+    buildings.updateTickMultiplier();
     
     ui.updateScore();
     ui.updateClick();

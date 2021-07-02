@@ -71,3 +71,9 @@ const _getInstance = (module) => {
 export const loggerFactory = {
   getInstance: _getInstance
 };
+
+export const devLogger = {
+  huge(message) {
+    console.log(`%c${message}`, 'font-size: 36px');
+  }
+};

@@ -116,6 +116,7 @@ api.loadSave = (save) => {
 
 api.tick = () => {
   const addValue = session.earning / config.targetTicksPerSec;
+  
   session.score += addValue;
   session.lifetimeScore += addValue;
 }
