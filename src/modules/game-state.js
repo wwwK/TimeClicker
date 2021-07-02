@@ -9,7 +9,7 @@ const achievements = require('../assets/_achievements.json');
 const session = {
   // Saved
   score: 0,
-  clickPower: 100000,
+  clickPower: 1,
   earning: 0,
   clickCount: 0,
   lifetimeScore: 0,
@@ -24,8 +24,8 @@ const session = {
 const config = {
   targetTicksPerSec: 4,
   gameLoopSleepMs: 0,
-  autoSave: false,
-  autoSaveInt: 30
+  autoSave: true,
+  autoSaveInt: 60
 }
 
 // Process buildings
@@ -108,10 +108,6 @@ api.loadSave = (save) => {
   (save.build?.tm ?? []).forEach((value, index) => {
     buildings.tickMultipliers[index] = value;
   });
-
-  
-
-  console.log(JSON.stringify(session, null, 2))
 }
 
 api.tick = () => {

@@ -11,17 +11,17 @@ const SAVE_KEY = 'time_clicker.save';
 // Internal API
 const internal = {
     saveTickCounter: 0,
-    nextSaveDate: new Date(new Date().getTime() + 30000),
-    autoSaveEnabled: false
+    nextSaveDate: new Date(new Date().getTime() + 30000)
 }
 
 internal.handleAutoSave = () => {
-    if(!internal.autoSaveEnabled) { return; }
+    if(!state.config.autoSave) { return; }
 
     if(internal.saveTickCounter % saveCheckMod === 0) {
         if(new Date() < internal.nextSaveDate) {
+            let delayMs = state.config.autoSaveInt * 1000;
             internal.saveLocal();
-            internal.nextSaveDate = new Date((new Date()).getTime() + 30000);
+            internal.nextSaveDate = new Date((new Date()).getTime() + delayMs);
         }
         internal.saveTickCounter = 0;
     }
