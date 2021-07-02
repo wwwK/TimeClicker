@@ -48,7 +48,7 @@ buildings.names.forEach((name, index) => {
   });
 
   if(!buildings.enabled.hasOwnProperty(index)) {
-    buildings.enabled[index] = false;
+    buildings.enabled[index] = index === 0;
   }
 });
 
@@ -116,7 +116,7 @@ api.loadSave = (save) => {
 
 api.tick = () => {
   const addValue = session.earning / config.targetTicksPerSec;
-  
+
   session.score += addValue;
   session.lifetimeScore += addValue;
 }
