@@ -8,7 +8,7 @@ const session = {
   score: 0,
   scoreModifier: 'fs',
   clickCount: 0,
-  clickingPower: 1000,
+  clickingPower: 100000,
   clickingPowerModifier: 'fs',
   earning: 0,
   earningModifier: 'fs',
@@ -68,7 +68,6 @@ api.handleClick = () => {
 
 api.tick = () => {
   const addValue = session.earning / config.targetTicksPerSec;
-  
   session.score += addValue;
   session.lifetimeScore += addValue;
 }

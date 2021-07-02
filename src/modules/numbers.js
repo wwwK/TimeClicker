@@ -3,6 +3,7 @@ import { loggerFactory } from './logger';
 
 const logger = loggerFactory.getInstance(enums.module.numbers);
 const numberInfo = require('../assets/_numbers.json');
+
 let currentIndex = 0;
 const api = {};
 

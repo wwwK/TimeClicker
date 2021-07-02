@@ -14,10 +14,10 @@ let bootstrapped = false;
 
 // Internal methods
 const _tick = () => {
-    storage.tick();
-    state.tick();
     buildings.tick();
+    state.tick();
     ui.tick();
+    storage.tick();
 }
 
 const _bindDomEventListeners = () => {
@@ -45,7 +45,12 @@ api.bootstrap = () => {
     logger.traceMethod('bootstrapAndStart');
 
     _bindDomEventListeners();
+    
     ui.updateCurrentUnit();
+    ui.updateScore();
+    ui.updateClick();
+    ui.updateEarning();
+
     buildings.updateBuildings();
     state.session.tickMultiplier = buildings.calculateTickMultiplier();
     _tick();
