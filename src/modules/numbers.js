@@ -4,14 +4,8 @@ import { loggerFactory } from './logger';
 const logger = loggerFactory.getInstance(enums.module.numbers);
 const numberInfo = require('../assets/_numbers.json');
 
-const api = {};
 
-const internal = {
-  lastScoreLength: 0,
-  currentScoreDivider: 1
-};
-
-const currentInfo  = {
+const scoreNumberInfo  = {
   abbreviation: undefined,
   name: undefined,
   multiplier: undefined,
@@ -19,6 +13,19 @@ const currentInfo  = {
   description: undefined
 }
 
+const clickNumberInfo = {
+  abbreviation: undefined,
+  name: undefined,
+  multiplier: undefined,
+  url: undefined,
+  description: undefined
+}
+
+
+const internal = {
+  lastScoreLength: 0,
+  lastClickLength: 0
+}
 
 internal.findClosestMultiplier = (value) => {
   logger.traceMethod('findClosestMultiplier', value);
@@ -36,20 +43,32 @@ internal.getNumberLength = (value) => {
   return Math.ceil(Math.log(value + 1) / Math.LN10);
 }
 
-internal.setCurrentInfo = (idx) => {
-  currentInfo.abbreviation = numberInfo.abbreviations[idx];
-  currentInfo.name = numberInfo.names[idx];
-  currentInfo.multiplier = numberInfo.multipliers[idx];
-  currentInfo.url = numberInfo.urls[idx];
-  currentInfo.description = numberInfo.descriptions[idx];
+internal.setScoreNumberInfo = (idx) => {
+  scoreNumberInfo.abbreviation = numberInfo.abbreviations[idx];
+  scoreNumberInfo.name = numberInfo.names[idx];
+  scoreNumberInfo.multiplier = numberInfo.multipliers[idx];
+  scoreNumberInfo.url = numberInfo.urls[idx];
+  scoreNumberInfo.description = numberInfo.descriptions[idx];
 }
 
-internal.setCurrentInfo(0);
+internal.setClickNumberInfo = (idx) => {
+  clickNumberInfo.abbreviation = numberInfo.abbreviations[idx];
+  clickNumberInfo.name = numberInfo.names[idx];
+  clickNumberInfo.multiplier = numberInfo.multipliers[idx];
+  clickNumberInfo.url = numberInfo.urls[idx];
+  clickNumberInfo.description = numberInfo.descriptions[idx];
+}
+
+internal.setScoreNumberInfo(0);
+internal.setClickNumberInfo(0);
 
 /* **********************************************************************
 * Define an external API
 ********************************************************************** */
-api.info = currentInfo;
+const api = {
+  scoreInfo: scoreNumberInfo,
+  clickInfo: clickNumberInfo
+};
 
 api.format = (value, append) => {
   logger.traceMethod('format', value);
@@ -77,7 +96,7 @@ api.format = (value, append) => {
 }
 
 api.getMoreInfoUrl = () => {
-  return currentInfo.url;
+  return scoreNumberInfo.url;
 }
 
 api.formatScore = (value) => {
@@ -85,10 +104,22 @@ api.formatScore = (value) => {
 
   if(internal.lastScoreLength !== length) {
     internal.lastScoreLength = length;
-    internal.setCurrentInfo(internal.findClosestMultiplier(value));
+    internal.setScoreNumberInfo(internal.findClosestMultiplier(value));
   }
 
-  let relativeValue = value / currentInfo.multiplier;
+  let relativeValue = value / scoreNumberInfo.multiplier;
+  return Math.round((relativeValue + Number.EPSILON) * 100) / 100;
+}
+
+api.formatClick = (value) => {
+  const length = internal.getNumberLength(value);
+
+  if(internal.lastClickLength !== length) {
+    internal.lastClickLength = length;
+    internal.setClickNumberInfo(internal.findClosestMultiplier(value));
+  }
+
+  let relativeValue = value / clickNumberInfo.multiplier;
   return Math.round((relativeValue + Number.EPSILON) * 100) / 100;
 }
 

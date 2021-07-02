@@ -17,9 +17,9 @@ internal.updateEarningModifier = () => {
 
 internal.updateCurrentUnit = () => {
   logger.traceMethod('_updateCurrentUnit');
-  gameDom.unitName.innerHTML = numbers.info.name;
-  gameDom.unitAbbreviation.innerHTML = numbers.info.abbreviation;
-  gameDom.unitDescription.innerHTML = numbers.info.description;
+  gameDom.unitName.innerHTML = numbers.scoreInfo.name;
+  gameDom.unitAbbreviation.innerHTML = numbers.scoreInfo.abbreviation;
+  gameDom.unitDescription.innerHTML = numbers.scoreInfo.description;
 }
 
 
@@ -47,20 +47,21 @@ api.showUpgradesMenu = () => {
 api.updateScore = () => {
   gameDom.score.innerHTML = numbers.formatScore(state.session.score);
 
-  if(state.session.scoreModifier !== numbers.info.abbreviation) {
-    state.session.scoreModifier = numbers.info.abbreviation;
-    gameDom.scoreMod.innerHTML = numbers.info.abbreviation;
+  if(state.session.scoreModifier !== numbers.scoreInfo.abbreviation) {
+    state.session.scoreModifier = numbers.scoreInfo.abbreviation;
+    gameDom.scoreMod.innerHTML = numbers.scoreInfo.abbreviation;
     internal.updateCurrentUnit();
   }
 }
 
 api.updateClick = () => {
   logger.traceMethod('updateClick');
+  gameDom.click.innerHTML = numbers.formatClick(state.session.clickPower);
 
-
-
-  gameDom.click.innerHTML = state.session.clickPower;
-  gameDom.clickMod.innerHTML = state.session.clickPowerModifier;
+  if(state.session.clickPowerModifier !== numbers.clickInfo.abbreviation) {
+    state.session.clickPowerModifier = numbers.clickInfo.abbreviation;
+    gameDom.clickMod.innerHTML = state.session.clickPowerModifier;
+  }
 }
 
 api.updateEarning = () => {

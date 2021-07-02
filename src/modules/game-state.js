@@ -8,7 +8,7 @@ const session = {
   score: 0,
   scoreModifier: undefined,
   clickPower: 100000,
-  clickPowerModifier: 'fs',
+  clickPowerModifier: undefined,
 
 
   clickCount: 0,
