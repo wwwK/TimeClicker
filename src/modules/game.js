@@ -53,10 +53,9 @@ api.bootstrap = () => {
 
     _bindDomEventListeners();
     
-    ui.updateCurrentUnit();
-    ui.updateScore();
     ui.updateClick();
     ui.updateEarning();
+    ui.updateScore();
 
     buildings.updateBuildings();
     state.session.tickMultiplier = buildings.calculateTickMultiplier();

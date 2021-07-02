@@ -6,9 +6,12 @@ const logger = loggerFactory.getInstance(enums.module.gameState);
 
 const session = {
   score: 0,
+  scoreModifier: undefined,
+  clickPower: 100000,
+  clickPowerModifier: 'fs',
+
+
   clickCount: 0,
-  clickingPower: 100000,
-  clickingPowerModifier: 'fs',
   earning: 0,
   earningModifier: 'fs',
 
@@ -58,8 +61,8 @@ const api = {
 }
 
 api.handleClick = () => {
-  session.score += session.clickingPower;
-  session.sessionScore += session.clickingPower;
+  session.score += session.clickPower;
+  session.sessionScore += session.clickPower;
 
   session.clickCount += 1;
   session.lifetimeClickCount += 1;

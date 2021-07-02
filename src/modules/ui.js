@@ -9,12 +9,17 @@ const logger = loggerFactory.getInstance(enums.module.ui);
 /* **********************************************************************
 * Internal methods
 ********************************************************************** */
-const internal = {
-  currentScoreModifier: undefined
-};
+const internal = {};
 
 internal.updateEarningModifier = () => {
   gameDom.earningMod.innerHTML = state.session.earningModifier;
+}
+
+internal.updateCurrentUnit = () => {
+  logger.traceMethod('_updateCurrentUnit');
+  gameDom.unitName.innerHTML = numbers.info.name;
+  gameDom.unitAbbreviation.innerHTML = numbers.info.abbreviation;
+  gameDom.unitDescription.innerHTML = numbers.info.description;
 }
 
 
@@ -39,26 +44,23 @@ api.showUpgradesMenu = () => {
   gameDom.menuTabUpgrades.setAttribute('class', 'upgrades active');
 }
 
-api.updateCurrentUnit = () => {
-  logger.traceMethod('updateCurrentUnit');
-  gameDom.unitName.innerHTML = numbers.info.name;
-  gameDom.unitAbbreviation.innerHTML = numbers.info.abbreviation;
-  gameDom.unitDescription.innerHTML = numbers.info.description;
-}
-
 api.updateScore = () => {
   gameDom.score.innerHTML = numbers.formatScore(state.session.score);
 
-  if(internal.currentScoreModifier !== numbers.info.abbreviation) {
-    internal.currentScoreModifier = numbers.info.abbreviation;
+  if(state.session.scoreModifier !== numbers.info.abbreviation) {
+    state.session.scoreModifier = numbers.info.abbreviation;
     gameDom.scoreMod.innerHTML = numbers.info.abbreviation;
+    internal.updateCurrentUnit();
   }
 }
 
 api.updateClick = () => {
   logger.traceMethod('updateClick');
-  gameDom.click.innerHTML = state.session.clickingPower;
-  gameDom.clickMod.innerHTML = state.session.clickingPowerModifier;
+
+
+
+  gameDom.click.innerHTML = state.session.clickPower;
+  gameDom.clickMod.innerHTML = state.session.clickPowerModifier;
 }
 
 api.updateEarning = () => {
