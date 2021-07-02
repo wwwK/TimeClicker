@@ -1,5 +1,5 @@
 import gameDom from './dom';
-import numbers from './numbers.module';
+import numbers from './numbers';
 import state from './game-state';
 import { toast } from './toast.module';
 import ui from './ui';

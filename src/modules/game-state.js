@@ -1,4 +1,4 @@
-import numbers from './numbers.module';
+import numbers from './numbers';
 import { loggerFactory } from './logger';
 import { enums } from './enums';
 

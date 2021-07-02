@@ -3,12 +3,12 @@ import { enums } from "./enums";
 const config = {
   disabledModules: [
     // enums.module.numbers,
-    enums.module.buildings,
-    enums.module.gameState,
-    enums.module.storage,
-    enums.module.toast,
-    enums.module.ui,
-    enums.module.game,
+    // enums.module.buildings,
+    // enums.module.gameState,
+    // enums.module.storage,
+    // enums.module.toast,
+    // enums.module.ui,
+    // enums.module.game,
   ],
   minSeverity: enums.severity.Trace,
   traceModuleLoad: true

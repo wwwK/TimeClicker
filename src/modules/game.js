@@ -2,7 +2,7 @@ import gameDom from "./dom";
 import state from "./game-state";
 import storage from "./storage";
 import buildings from './buildings';
-import numbers from './numbers.module';
+import numbers from './numbers';
 import ui from "./ui";
 import { loggerFactory } from './logger';
 import { enums } from "./enums";
